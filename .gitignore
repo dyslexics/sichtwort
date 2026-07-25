@@ -1,0 +1,10 @@
+build/
+*.xcodeproj
+DerivedData/
+.DS_Store
+fastlane/metadata/review_information/
+fastlane/report.xml
+*.mobileprovision
+*.ipa
+tools/venv/
+__pycache__/
