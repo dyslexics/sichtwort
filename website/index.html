@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sichtwort — Blitzlesen-Training für Kinder. Gratis, werbefrei, offline.</title>
+<meta name="description" content="Sichtwort trainiert den Sichtwortschatz: Wörter blitzen kurz auf und werden als Ganzes erkannt. Gratis, werbefrei, ohne Datensammlung, Open Source. Ein Projekt des EÖDL.">
+<style>
+:root { --blau: #264398; --hell: #eef2fb; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Nunito", "Segoe UI", system-ui, sans-serif; color: #222; line-height: 1.6; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+header { background: linear-gradient(160deg, var(--blau), #4a74d4); color: #fff; padding: 48px 0 40px; text-align: center; }
+header img.mascot { height: 180px; margin-bottom: 12px; }
+h1 { font-size: 2.6rem; letter-spacing: 1px; }
+.claim { font-size: 1.25rem; opacity: .92; margin-top: 6px; }
+.badges { margin-top: 22px; }
+.badges span, .badges a.store { display: inline-block; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.45); border-radius: 22px; padding: 7px 18px; margin: 4px; font-weight: 700; color: #fff; text-decoration: none; }
+section { padding: 44px 0; }
+section.alt { background: var(--hell); }
+h2 { color: var(--blau); font-size: 1.7rem; margin-bottom: 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.card { background: #fff; border: 1px solid #dde4f2; border-radius: 14px; padding: 18px 20px; }
+.card h3 { color: var(--blau); font-size: 1.05rem; margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #e6eaf5; }
+th { background: var(--blau); color: #fff; }
+td:nth-child(2), td:nth-child(3) { text-align: center; }
+.ok { color: #2a8a3e; font-weight: 700; }
+.nein { color: #b02a20; font-weight: 700; }
+footer { background: #1b2f6b; color: #cdd6ee; padding: 28px 0; font-size: .95rem; }
+footer a { color: #fff; }
+.hinweis { font-size: .95rem; background: #fff8e6; border: 1px solid #eadfb2; border-radius: 12px; padding: 14px 18px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img class="mascot" src="assets/winkend.png" alt="Sichtwort-Maskottchen, ein freundlicher blauer Käfer">
+    <h1>Sichtwort</h1>
+    <p class="claim">Wörter blitzschnell erkennen — Blitzlesen-Training für Kinder</p>
+    <div class="badges">
+      <span>Gratis</span><span>Werbefrei</span><span>Keine Datensammlung</span><span>Offline</span><span>Open Source</span>
+    </div>
+    <div class="badges">
+      <a class="store" href="#appstore">Bald im App&nbsp;Store (iPhone, iPad)</a>
+      <a class="store" href="https://github.com/dyslexics/sichtwort">Quellcode auf GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Was ist Blitzlesen?</h2>
+    <p>Ein Wort blitzt für kurze, einstellbare Zeit auf. Das Kind erfasst es als Ganzes und spricht
+    es aus. So werden die häufigsten Wörter automatisiert — wer sie auf einen Blick erkennt, hat beim
+    Lesen von Texten mehr Aufmerksamkeit für den Sinn. Blitzlesen ist ein bewährter Baustein im
+    Leseband der Grundschule und im Legasthenietraining.</p>
+    <p class="hinweis"><strong>Fachlicher Hinweis:</strong> Blitzlesen eignet sich für Kinder, die die
+    Buchstabensynthese bereits beherrschen. Für Leseanfängerinnen und Leseanfänger, die noch Buchstabe
+    für Buchstabe erlesen, ist die Übungsform verfrüht. Mit 2 Sekunden beginnen und die Zeit erst
+    verkürzen, wenn die Wörter sicher erkannt werden.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Funktionen</h2>
+    <div class="grid">
+      <div class="card"><h3>Sprachausgabe</h3><p>Jedes Wort kann vorgesprochen werden — direkt auf dem Gerät, komplett offline.</p></div>
+      <div class="card"><h3>Silbenvisualisierung</h3><p>Silben farbig markiert oder nacheinander aufleuchtend — ideal fürs Training.</p></div>
+      <div class="card"><h3>Wählbare Schrift</h3><p>Standard, OpenDyslexic oder Lexend, Schriftgröße frei einstellbar.</p></div>
+      <div class="card"><h3>Abenteuer-Modus</h3><p>Die Schwierigkeit passt sich automatisch an: schneller bei Erfolg, langsamer bei Fehlern.</p></div>
+      <div class="card"><h3>Fehler-Wiedervorlage</h3><p>Nicht erkannte Wörter kommen automatisch wieder, bis sie dreimal sicher gelesen wurden.</p></div>
+      <div class="card"><h3>Mehrere Kinder</h3><p>Profile mit eigenen Sternen, Einstellungen und Statistiken — ohne Accounts.</p></div>
+      <div class="card"><h3>Eigene Wortlisten</h3><p>Lernwörter der Woche selbst anlegen oder als CSV importieren und exportieren.</p></div>
+      <div class="card"><h3>Alles inklusive</h3><p>Grundwortschatz 500/1000, englische Sight Words, 8 Themenlisten — ohne Zusatzkäufe.</p></div>
+      <div class="card"><h3>Aufblitzzeit 0,02–5 s</h3><p>Vom Einstieg mit langen Zeiten bis zur Profi-Stufe in Hundertstelsekunden.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Sichtwort im Vergleich</h2>
+    <table>
+      <tr><th></th><th>Sichtwort</th><th>Typische Blitzlese-Apps</th></tr>
+      <tr><td>Preis</td><td class="ok">gratis</td><td>Kaufpreis + In-App-Käufe</td></tr>
+      <tr><td>Werbung / Datensammlung</td><td class="ok">keine</td><td>unterschiedlich</td></tr>
+      <tr><td>Sprachausgabe</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
+      <tr><td>Silbenvisualisierung</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
+      <tr><td>Legasthenie-Schriften wählbar</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
+      <tr><td>Adaptive Schwierigkeit</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
+      <tr><td>Profile für mehrere Kinder</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
+      <tr><td>CSV-Import <em>und</em> -Export</td><td class="ok">ja</td><td>teils nur Import</td></tr>
+      <tr><td>Quellcode offen</td><td class="ok">GPL-3.0</td><td class="nein">nein</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Datenschutz</h2>
+    <p>Sichtwort erfasst <strong>keine Daten</strong>. Keine Accounts, keine Cloud, kein Tracking,
+    keine Werbung. Alle Übungsdaten bleiben auf dem Gerät. Die App funktioniert vollständig offline —
+    auch im Schulhaus ohne WLAN und ohne Einwilligungs-Aufwand. Details in der
+    <a href="privacy.html">Datenschutzerklärung</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Sichtwort</strong> — ein Projekt des <a href="https://www.legasthenie.at">EÖDL — Erster Österreichischer Dachverband Legasthenie</a>.</p>
+    <p>Diplomierte Legasthenietrainerinnen und Legasthenietrainer finden: <a href="https://www.legasthenietrainer.com">legasthenietrainer.com</a></p>
+    <p><a href="privacy.html">Datenschutz</a> · <a href="https://github.com/dyslexics/sichtwort">GitHub</a> · Kontakt: <a href="mailto:office@legasthenie.at">office@legasthenie.at</a></p>
+  </div>
+</footer>
+</body>
+</html>
