@@ -1,0 +1,28 @@
+Sichtwort trainiert den Sichtwortschatz: Ein Wort blitzt kurz auf, das Kind erfasst es als Ganzes und spricht es aus. So werden die häufigsten Wörter automatisiert — und beim Lesen von Texten bleibt mehr Aufmerksamkeit für den Sinn. Blitzlesen ist ein bewährter Baustein im Leseband der Grundschule und im Legasthenietraining.
+
+KOMPLETT GRATIS
+Keine Werbung, keine In-App-Käufe, keine Abos. Alle Wortlisten und Funktionen sind enthalten. Sichtwort ist ein Open-Source-Projekt des EÖDL (Erster Österreichischer Dachverband Legasthenie).
+
+KEINE DATENSAMMLUNG
+Sichtwort erfasst keinerlei Daten. Keine Accounts, keine Cloud, kein Tracking. Die App funktioniert vollständig offline — ideal auch für Schule und Training.
+
+DIE FUNKTIONEN
+• Aufblitzzeit von 2 Hundertstelsekunden bis 5 Sekunden frei einstellbar
+• Gemeinsam-Modus: Eine erwachsene Person hört zu und bewertet — ohne Tippen, auch für Erstklässler geeignet
+• Alleine-Modus: Das Kind tippt das Wort und übt zusätzlich die Rechtschreibung
+• Vorsprechen: Jedes Wort kann per Sprachausgabe angehört werden (offline)
+• Silbenvisualisierung: Silben farbig markiert oder nacheinander aufleuchtend
+• Schriftwahl: Standard, OpenDyslexic oder Lexend, Schriftgröße frei einstellbar
+• Abenteuer-Modus: Die Geschwindigkeit passt sich automatisch dem Können an
+• Fehler-Wiedervorlage: Nicht erkannte Wörter kommen automatisch wieder, bis sie sitzen
+• Profile für mehrere Kinder mit eigener Statistik und Fehlerhistorie
+• Wortschatz: die 500 und 1000 häufigsten deutschen Wörter, filterbar nach Wortart und Silbenzahl
+• Englische Sight Words (Dolch und Fry) — Sprache pro Liste wählbar
+• 8 Themenlisten inklusive: Silbenwörter, Dehnungs-h, ei und ie, Doppelkonsonanten, sch, sp und st, d und t, Weltraum
+• Eigene Wortlisten: anlegen, CSV importieren UND exportieren, feste oder zufällige Reihenfolge — garantiert alle Wörter pro Durchlauf
+• Schweizer Rechtschreibung (ss statt ß) zuschaltbar
+• Belohnungssystem mit Sammelfiguren und endlosem Levelsystem
+• iPhone und iPad, Querformat und Split View, externe Displays für den Unterricht
+
+FACHLICHER HINWEIS
+Blitzlesen eignet sich für Kinder, die die Buchstabensynthese bereits beherrschen. Mit 2 Sekunden beginnen und die Zeit erst verkürzen, wenn die Wörter sicher erkannt werden. Sichtwort ersetzt kein Legasthenietraining — es ist ein Werkzeug für einen klar umrissenen Baustein: die Automatisierung der Worterkennung. Diplomierte Legasthenietrainerinnen und Legasthenietrainer finden Sie auf legasthenietrainer.com.
