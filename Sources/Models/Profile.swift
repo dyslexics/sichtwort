@@ -13,7 +13,7 @@ struct ProfileSettings: Codable, Hashable {
     var syllableMode: String = "none"  // none | colored | sequential
     var tts: Bool = true
     var swissSpelling: Bool = false
-    var background: String = "wiese"
+    var background: String = "meer"
     var selectedList: String = "de500" // Builtin-ID oder "custom:<uuid>"
     var typeFilter: [String] = []      // leer = alle Wortarten
     var syllableFilter: String = "all" // all | 1 | 2 | 3plus
@@ -32,7 +32,7 @@ struct ProfileSettings: Codable, Hashable {
         syllableMode = try c.decodeIfPresent(String.self, forKey: .syllableMode) ?? "none"
         tts = try c.decodeIfPresent(Bool.self, forKey: .tts) ?? true
         swissSpelling = try c.decodeIfPresent(Bool.self, forKey: .swissSpelling) ?? false
-        background = try c.decodeIfPresent(String.self, forKey: .background) ?? "wiese"
+        background = try c.decodeIfPresent(String.self, forKey: .background) ?? "meer"
         selectedList = try c.decodeIfPresent(String.self, forKey: .selectedList) ?? "de500"
         typeFilter = try c.decodeIfPresent([String].self, forKey: .typeFilter) ?? []
         syllableFilter = try c.decodeIfPresent(String.self, forKey: .syllableFilter) ?? "all"

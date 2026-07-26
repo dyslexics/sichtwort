@@ -1,0 +1,165 @@
+# -*- coding: utf-8 -*-
+"""Grundwortschatz Polnisch (pl500) - Rohliste fuer Sichtwort.
+Feld 1 = Wort, Feld 2 = Wortart: n=Nomen, v=Verb, a=Adjektiv, o=Sonstiges.
+"""
+
+WORDS = [
+    # --- Funktionswoerter, Pronomen, Praepositionen, Adverbien (o) ---
+    ("i", "o"), ("a", "o"), ("ale", "o"), ("lub", "o"), ("albo", "o"),
+    ("że", "o"), ("bo", "o"), ("gdy", "o"), ("kiedy", "o"), ("jeśli", "o"),
+    ("więc", "o"), ("też", "o"), ("także", "o"), ("już", "o"), ("jeszcze", "o"),
+    ("tylko", "o"), ("bardzo", "o"), ("tak", "o"), ("nie", "o"), ("może", "o"),
+    ("chyba", "o"), ("zawsze", "o"), ("nigdy", "o"), ("często", "o"), ("czasem", "o"),
+    ("teraz", "o"), ("potem", "o"), ("wczoraj", "o"), ("dzisiaj", "o"), ("jutro", "o"),
+    ("rano", "o"), ("tutaj", "o"), ("tam", "o"), ("gdzie", "o"), ("skąd", "o"),
+    ("jak", "o"), ("co", "o"), ("kto", "o"), ("który", "o"), ("ile", "o"),
+    ("dlaczego", "o"), ("ja", "o"), ("ty", "o"), ("on", "o"), ("ona", "o"),
+    ("ono", "o"), ("my", "o"), ("wy", "o"), ("oni", "o"), ("mnie", "o"),
+    ("jego", "o"), ("jej", "o"), ("nas", "o"), ("was", "o"), ("ich", "o"),
+    ("mój", "o"), ("twój", "o"), ("nasz", "o"), ("wasz", "o"), ("ten", "o"),
+    ("ta", "o"), ("to", "o"), ("te", "o"), ("taki", "o"), ("sam", "o"),
+    ("każdy", "o"), ("wszyscy", "o"), ("wszystko", "o"), ("nic", "o"), ("ktoś", "o"),
+    ("coś", "o"), ("nikt", "o"), ("w", "o"), ("na", "o"), ("do", "o"),
+    ("od", "o"), ("za", "o"), ("pod", "o"), ("nad", "o"), ("przed", "o"),
+    ("po", "o"), ("przy", "o"), ("obok", "o"), ("między", "o"), ("przez", "o"),
+    ("bez", "o"), ("dla", "o"), ("u", "o"), ("z", "o"), ("blisko", "o"),
+    ("daleko", "o"), ("razem", "o"), ("znowu", "o"), ("dobrze", "o"), ("źle", "o"),
+    ("szybko", "o"), ("cicho", "o"), ("głośno", "o"), ("dużo", "o"), ("mało", "o"),
+    ("więcej", "o"), ("mniej", "o"), ("trochę", "o"), ("wszędzie", "o"), ("nigdzie", "o"),
+    ("proszę", "o"), ("dziękuję", "o"), ("przepraszam", "o"), ("cześć", "o"), ("dobranoc", "o"),
+    ("jeden", "o"), ("dwa", "o"), ("trzy", "o"), ("cztery", "o"), ("pięć", "o"),
+    ("sześć", "o"), ("siedem", "o"), ("osiem", "o"), ("dziewięć", "o"), ("dziesięć", "o"),
+
+    # --- Familie & Menschen ---
+    ("mama", "n"), ("tata", "n"), ("mamusia", "n"), ("tatuś", "n"), ("rodzice", "n"),
+    ("brat", "n"), ("siostra", "n"), ("babcia", "n"), ("dziadek", "n"), ("ciocia", "n"),
+    ("wujek", "n"), ("syn", "n"), ("córka", "n"), ("dziecko", "n"), ("dzieci", "n"),
+    ("rodzina", "n"), ("chłopiec", "n"), ("dziewczynka", "n"), ("człowiek", "n"), ("ludzie", "n"),
+    ("pan", "n"), ("pani", "n"), ("kolega", "n"), ("koleżanka", "n"), ("przyjaciel", "n"),
+    ("imię", "n"), ("nazwisko", "n"), ("gość", "n"), ("sąsiad", "n"),
+
+    # --- Schule & Spiel ---
+    ("szkoła", "n"), ("klasa", "n"), ("uczeń", "n"), ("uczennica", "n"), ("nauczyciel", "n"),
+    ("nauczycielka", "n"), ("lekcja", "n"), ("zeszyt", "n"), ("książka", "n"), ("ołówek", "n"),
+    ("długopis", "n"), ("kredka", "n"), ("gumka", "n"), ("linijka", "n"), ("plecak", "n"),
+    ("piórnik", "n"), ("tablica", "n"), ("ławka", "n"), ("krzesło", "n"), ("stół", "n"),
+    ("papier", "n"), ("farby", "n"), ("nożyczki", "n"), ("klej", "n"), ("litera", "n"),
+    ("słowo", "n"), ("zdanie", "n"), ("liczba", "n"), ("zadanie", "n"), ("przerwa", "n"),
+    ("dzwonek", "n"), ("biblioteka", "n"), ("przedszkole", "n"), ("kolor", "n"), ("rysunek", "n"),
+    ("obrazek", "n"), ("gra", "n"), ("zabawa", "n"), ("zabawka", "n"), ("piłka", "n"),
+    ("lalka", "n"), ("klocki", "n"), ("rower", "n"), ("hulajnoga", "n"), ("komputer", "n"),
+    ("telefon", "n"), ("kredą", "o"),
+
+    # --- Tiere ---
+    ("pies", "n"), ("kot", "n"), ("kotek", "n"), ("piesek", "n"), ("koń", "n"),
+    ("krowa", "n"), ("świnia", "n"), ("owca", "n"), ("koza", "n"), ("kura", "n"),
+    ("kogut", "n"), ("kaczka", "n"), ("gęś", "n"), ("ptak", "n"), ("wróbel", "n"),
+    ("bocian", "n"), ("sowa", "n"), ("orzeł", "n"), ("ryba", "n"), ("żaba", "n"),
+    ("wąż", "n"), ("mysz", "n"), ("królik", "n"), ("zając", "n"), ("lis", "n"),
+    ("wilk", "n"), ("niedźwiedź", "n"), ("jeż", "n"), ("wiewiórka", "n"), ("sarna", "n"),
+    ("jeleń", "n"), ("słoń", "n"), ("małpa", "n"), ("lew", "n"), ("tygrys", "n"),
+    ("żyrafa", "n"), ("zebra", "n"), ("krokodyl", "n"), ("motyl", "n"), ("pszczoła", "n"),
+    ("mucha", "n"), ("komar", "n"), ("mrówka", "n"), ("pająk", "n"), ("ślimak", "n"),
+    ("biedronka", "n"), ("robak", "n"), ("zwierzę", "n"), ("gniazdo", "n"), ("skrzydło", "n"),
+
+    # --- Essen & Trinken ---
+    ("chleb", "n"), ("bułka", "n"), ("masło", "n"), ("ser", "n"), ("mleko", "n"),
+    ("jajko", "n"), ("mięso", "n"), ("kiełbasa", "n"), ("szynka", "n"), ("zupa", "n"),
+    ("obiad", "n"), ("śniadanie", "n"), ("kolacja", "n"), ("woda", "n"), ("sok", "n"),
+    ("herbata", "n"), ("kawa", "n"), ("cukier", "n"), ("sól", "n"), ("miód", "n"),
+    ("dżem", "n"), ("ciasto", "n"), ("ciastko", "n"), ("lody", "n"), ("czekolada", "n"),
+    ("cukierek", "n"), ("owoc", "n"), ("jabłko", "n"), ("gruszka", "n"), ("śliwka", "n"),
+    ("wiśnia", "n"), ("truskawka", "n"), ("malina", "n"), ("banan", "n"), ("pomarańcza", "n"),
+    ("cytryna", "n"), ("winogrono", "n"), ("arbuz", "n"), ("warzywo", "n"), ("marchewka", "n"),
+    ("ziemniak", "n"), ("pomidor", "n"), ("ogórek", "n"), ("cebula", "n"), ("kapusta", "n"),
+    ("fasola", "n"), ("sałata", "n"), ("grzyb", "n"), ("orzech", "n"), ("ryż", "n"),
+    ("makaron", "n"), ("mąka", "n"), ("kasza", "n"), ("jogurt", "n"), ("śmietana", "n"),
+
+    # --- Koerper ---
+    ("głowa", "n"), ("włosy", "n"), ("oko", "n"), ("ucho", "n"), ("nos", "n"),
+    ("usta", "n"), ("ząb", "n"), ("język", "n"), ("twarz", "n"), ("szyja", "n"),
+    ("ręka", "n"), ("palec", "n"), ("noga", "n"), ("stopa", "n"), ("kolano", "n"),
+    ("brzuch", "n"), ("plecy", "n"), ("serce", "n"), ("ramię", "n"),
+
+    # --- Kleidung ---
+    ("koszula", "n"), ("spodnie", "n"), ("sukienka", "n"), ("spódnica", "n"), ("sweter", "n"),
+    ("kurtka", "n"), ("czapka", "n"), ("szalik", "n"), ("rękawiczki", "n"), ("buty", "n"),
+    ("skarpetki", "n"), ("bluzka", "n"), ("płaszcz", "n"), ("piżama", "n"), ("pasek", "n"),
+    ("guzik", "n"), ("kieszeń", "n"),
+
+    # --- Haus & Dinge ---
+    ("dom", "n"), ("mieszkanie", "n"), ("pokój", "n"), ("kuchnia", "n"), ("łazienka", "n"),
+    ("sypialnia", "n"), ("okno", "n"), ("drzwi", "n"), ("ściana", "n"), ("podłoga", "n"),
+    ("sufit", "n"), ("dach", "n"), ("schody", "n"), ("klucz", "n"), ("lampa", "n"),
+    ("łóżko", "n"), ("szafa", "n"), ("dywan", "n"), ("lustro", "n"), ("zegar", "n"),
+    ("obraz", "n"), ("kanapa", "n"), ("poduszka", "n"), ("koc", "n"), ("ręcznik", "n"),
+    ("mydło", "n"), ("szczotka", "n"), ("garnek", "n"), ("talerz", "n"), ("kubek", "n"),
+    ("szklanka", "n"), ("łyżka", "n"), ("widelec", "n"), ("nóż", "n"), ("miska", "n"),
+    ("butelka", "n"), ("koszyk", "n"), ("pudełko", "n"), ("torba", "n"), ("worek", "n"),
+    ("świeca", "n"), ("kosz", "n"),
+
+    # --- Natur & Welt ---
+    ("słońce", "n"), ("księżyc", "n"), ("gwiazda", "n"), ("niebo", "n"), ("chmura", "n"),
+    ("deszcz", "n"), ("śnieg", "n"), ("wiatr", "n"), ("burza", "n"), ("tęcza", "n"),
+    ("mróz", "n"), ("lód", "n"), ("ogień", "n"), ("ziemia", "n"), ("kamień", "n"),
+    ("piasek", "n"), ("góra", "n"), ("las", "n"), ("drzewo", "n"), ("liść", "n"),
+    ("gałąź", "n"), ("kwiat", "n"), ("róża", "n"), ("trawa", "n"), ("łąka", "n"),
+    ("pole", "n"), ("ogród", "n"), ("rzeka", "n"), ("jezioro", "n"), ("morze", "n"),
+    ("plaża", "n"), ("wyspa", "n"), ("ścieżka", "n"), ("droga", "n"), ("most", "n"),
+    ("wieś", "n"), ("miasto", "n"), ("ulica", "n"), ("park", "n"), ("sklep", "n"),
+    ("poczta", "n"), ("kościół", "n"), ("szpital", "n"), ("dworzec", "n"), ("lotnisko", "n"),
+
+    # --- Fahrzeuge ---
+    ("samochód", "n"), ("autobus", "n"), ("tramwaj", "n"), ("pociąg", "n"), ("samolot", "n"),
+    ("statek", "n"), ("łódka", "n"), ("traktor", "n"),
+
+    # --- Zeit & Abstraktes ---
+    ("dzień", "n"), ("noc", "n"), ("wieczór", "n"), ("tydzień", "n"), ("miesiąc", "n"),
+    ("rok", "n"), ("godzina", "n"), ("minuta", "n"), ("czas", "n"), ("wiosna", "n"),
+    ("lato", "n"), ("jesień", "n"), ("zima", "n"), ("urodziny", "n"), ("prezent", "n"),
+    ("list", "n"), ("bajka", "n"), ("piosenka", "n"), ("muzyka", "n"), ("taniec", "n"),
+    ("film", "n"), ("praca", "n"), ("pomoc", "n"), ("radość", "n"), ("strach", "n"),
+    ("sen", "n"), ("głos", "n"), ("śmiech", "n"), ("łza", "n"), ("pytanie", "n"),
+    ("odpowiedź", "n"), ("początek", "n"), ("koniec", "n"), ("miejsce", "n"), ("historia", "n"),
+    ("poniedziałek", "n"), ("wtorek", "n"), ("środa", "n"), ("czwartek", "n"), ("piątek", "n"),
+    ("sobota", "n"), ("niedziela", "n"),
+
+    # --- Verben ---
+    ("być", "v"), ("mieć", "v"), ("robić", "v"), ("iść", "v"), ("chodzić", "v"),
+    ("jechać", "v"), ("biegać", "v"), ("stać", "v"), ("siedzieć", "v"), ("leżeć", "v"),
+    ("spać", "v"), ("wstawać", "v"), ("jeść", "v"), ("pić", "v"), ("gotować", "v"),
+    ("myć", "v"), ("sprzątać", "v"), ("pomagać", "v"), ("pracować", "v"), ("uczyć", "v"),
+    ("czytać", "v"), ("pisać", "v"), ("liczyć", "v"), ("rysować", "v"), ("malować", "v"),
+    ("śpiewać", "v"), ("tańczyć", "v"), ("grać", "v"), ("bawić", "v"), ("skakać", "v"),
+    ("latać", "v"), ("pływać", "v"), ("rzucać", "v"), ("łapać", "v"), ("kopać", "v"),
+    ("kleić", "v"), ("budować", "v"), ("otwierać", "v"), ("zamykać", "v"), ("dawać", "v"),
+    ("brać", "v"), ("nosić", "v"), ("kupować", "v"), ("płacić", "v"), ("szukać", "v"),
+    ("znaleźć", "v"), ("widzieć", "v"), ("patrzeć", "v"), ("słyszeć", "v"), ("słuchać", "v"),
+    ("mówić", "v"), ("powiedzieć", "v"), ("pytać", "v"), ("odpowiadać", "v"), ("wołać", "v"),
+    ("krzyczeć", "v"), ("śmiać", "v"), ("płakać", "v"), ("kochać", "v"), ("lubić", "v"),
+    ("chcieć", "v"), ("móc", "v"), ("musieć", "v"), ("wiedzieć", "v"), ("znać", "v"),
+    ("myśleć", "v"), ("pamiętać", "v"), ("zapomnieć", "v"), ("rozumieć", "v"), ("czekać", "v"),
+    ("wracać", "v"), ("przychodzić", "v"), ("wychodzić", "v"), ("wchodzić", "v"), ("sprzedawać", "v"),
+    ("dziękować", "v"), ("prosić", "v"), ("witać", "v"), ("dzwonić", "v"), ("spotkać", "v"),
+    ("zaczynać", "v"), ("kończyć", "v"), ("próbować", "v"), ("umieć", "v"), ("rosnąć", "v"),
+    ("żyć", "v"), ("mieszkać", "v"), ("siadać", "v"), ("wybierać", "v"), ("zbierać", "v"),
+    ("rzucić", "v"), ("marzyć", "v"), ("odpoczywać", "v"), ("ubierać", "v"), ("kąpać", "v"),
+
+    # --- Adjektive ---
+    ("duży", "a"), ("mały", "a"), ("wielki", "a"), ("długi", "a"), ("krótki", "a"),
+    ("wysoki", "a"), ("niski", "a"), ("gruby", "a"), ("chudy", "a"), ("szeroki", "a"),
+    ("wąski", "a"), ("nowy", "a"), ("stary", "a"), ("młody", "a"), ("dobry", "a"),
+    ("zły", "a"), ("ładny", "a"), ("brzydki", "a"), ("miły", "a"), ("wesoły", "a"),
+    ("smutny", "a"), ("mądry", "a"), ("głupi", "a"), ("silny", "a"), ("słaby", "a"),
+    ("szybki", "a"), ("wolny", "a"), ("ciepły", "a"), ("zimny", "a"), ("gorący", "a"),
+    ("mokry", "a"), ("suchy", "a"), ("czysty", "a"), ("brudny", "a"), ("pełny", "a"),
+    ("pusty", "a"), ("jasny", "a"), ("ciemny", "a"), ("głośny", "a"), ("cichy", "a"),
+    ("twardy", "a"), ("miękki", "a"), ("ostry", "a"), ("słodki", "a"), ("kwaśny", "a"),
+    ("słony", "a"), ("smaczny", "a"), ("głodny", "a"), ("zmęczony", "a"), ("chory", "a"),
+    ("zdrowy", "a"), ("bogaty", "a"), ("biedny", "a"), ("łatwy", "a"), ("trudny", "a"),
+    ("ważny", "a"), ("ciekawy", "a"), ("śmieszny", "a"), ("straszny", "a"), ("pierwszy", "a"),
+    ("ostatni", "a"), ("cały", "a"), ("inny", "a"), ("gotowy", "a"), ("grzeczny", "a"),
+    ("biały", "a"), ("czarny", "a"), ("czerwony", "a"), ("niebieski", "a"), ("zielony", "a"),
+    ("żółty", "a"), ("brązowy", "a"), ("szary", "a"), ("różowy", "a"), ("fioletowy", "a"),
+    ("pomarańczowy", "a"), ("złoty", "a"), ("srebrny", "a"),
+]

@@ -77,8 +77,8 @@ enum Theme {
     ]
 
     static let backgrounds: [(id: String, de: String, en: String, colors: [Color])] = [
-        ("wiese", "Wiese", "Meadow", [Color(red: 0.85, green: 0.95, blue: 0.80), Color(red: 0.62, green: 0.85, blue: 0.55)]),
         ("meer", "Meer", "Ocean", [Color(red: 0.80, green: 0.93, blue: 0.98), Color(red: 0.45, green: 0.72, blue: 0.92)]),
+        ("wiese", "Wiese", "Meadow", [Color(red: 0.85, green: 0.95, blue: 0.80), Color(red: 0.62, green: 0.85, blue: 0.55)]),
         ("weltall", "Weltall", "Space", [Color(red: 0.16, green: 0.16, blue: 0.35), Color(red: 0.05, green: 0.05, blue: 0.15)]),
         ("wueste", "Wüste", "Desert", [Color(red: 0.99, green: 0.93, blue: 0.78), Color(red: 0.93, green: 0.76, blue: 0.48)]),
         ("wald", "Wald", "Forest", [Color(red: 0.80, green: 0.90, blue: 0.78), Color(red: 0.35, green: 0.58, blue: 0.38)]),

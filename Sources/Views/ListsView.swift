@@ -4,6 +4,7 @@ import UniformTypeIdentifiers
 /// Wortlisten: mitgeliefert (alles gratis) + eigene Listen mit CSV-Import UND -Export.
 struct ListsView: View {
     @EnvironmentObject var store: AppStore
+    @ObservedObject private var packs = PackManager.shared
     @State private var showImporter = false
     @State private var newListName = ""
     @State private var showNewList = false
@@ -28,6 +29,18 @@ struct ListsView: View {
                 Section(loc("Englisch", "English")) {
                     ForEach(store.builtinLists.filter { $0.id.hasPrefix("en") }) { list in
                         builtinRow(list)
+                    }
+                }
+                if !packs.available.isEmpty {
+                    Section {
+                        ForEach(packs.available) { pack in
+                            packRow(pack)
+                        }
+                    } header: {
+                        Text(loc("Weitere Sprachen", "More languages"))
+                    } footer: {
+                        Text(loc("Sprachpakete werden einmalig geladen (je ca. 3–4 MB) und funktionieren danach komplett offline.",
+                                 "Language packs download once (about 3–4 MB each) and then work fully offline."))
                     }
                 }
                 Section {
@@ -77,6 +90,12 @@ struct ListsView: View {
                 }
                 Button(loc("Abbrechen", "Cancel"), role: .cancel) { newListName = "" }
             }
+            .alert(loc("Sprachpaket", "Language pack"),
+                   isPresented: Binding(get: { packs.lastError != nil }, set: { _ in packs.lastError = nil })) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(packs.lastError ?? "")
+            }
             .alert(loc("Import fehlgeschlagen", "Import failed"),
                    isPresented: Binding(get: { importError != nil }, set: { _ in importError = nil })) {
                 Button("OK", role: .cancel) {}
@@ -110,6 +129,61 @@ struct ListsView: View {
                 Spacer()
                 if selectedKey == list.id {
                     Image(systemName: "checkmark.circle.fill").foregroundColor(Theme.accent)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func packRow(_ pack: PackInfo) -> some View {
+        let key = "pack:\(pack.code)"
+        if packs.downloaded.contains(pack.code) {
+            Button {
+                selectList(key)
+            } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(pack.localizedName).foregroundColor(.primary)
+                        Text(loc("Stimme: \(pack.voice)", "Voice: \(pack.voice)"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    Spacer()
+                    if selectedKey == key {
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(Theme.accent)
+                    }
+                }
+            }
+            .swipeActions {
+                Button(role: .destructive) {
+                    packs.delete(pack.code)
+                    if selectedKey == key { selectList("de500") }
+                } label: {
+                    Label(loc("Löschen", "Delete"), systemImage: "trash")
+                }
+            }
+        } else if let p = packs.progress[pack.code] {
+            HStack {
+                Text(pack.localizedName)
+                Spacer()
+                ProgressView(value: p).frame(width: 90)
+            }
+        } else {
+            Button {
+                packs.download(pack.code)
+            } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(pack.localizedName).foregroundColor(.primary)
+                        Text(String(format: loc("%.1f MB — Stimme: %@", "%.1f MB — voice: %@"),
+                                    pack.sizeMB, pack.voice))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    Spacer()
+                    Image(systemName: "arrow.down.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(Theme.accent)
                 }
             }
         }

@@ -3,7 +3,7 @@ Sichtwort builds sight-word fluency: a word flashes briefly, the child recognize
 The app is German-first (basic vocabulary of the 500 and 1000 most frequent German words plus themed spelling lists) and also includes English Dolch and Fry sight words. The interface is available in German and English.
 
 COMPLETELY FREE
-No ads, no in-app purchases, no subscriptions. Sichtwort is an open-source project by EÖDL (First Austrian Umbrella Association for Dyslexia).
+No ads, no in-app purchases, no subscriptions. Sichtwort is an open-source project by EÖDL (Austrian Dyslexia Association).
 
 NO DATA COLLECTION
 No accounts, no cloud, no tracking. Works fully offline.

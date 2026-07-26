@@ -225,7 +225,7 @@ struct SettingsView: View {
             Text(loc("Über Sichtwort", "About Sichtwort"))
         } footer: {
             Text(loc("Ein Projekt des EÖDL — Erster Österreichischer Dachverband Legasthenie. Gratis, werbefrei, ohne Datensammlung. Version 1.0. Schriften: OpenDyslexic, Lexend (SIL OFL).",
-                     "A project by EÖDL — First Austrian Umbrella Association for Dyslexia. Free, ad-free, no data collection. Version 1.0. Fonts: OpenDyslexic, Lexend (SIL OFL)."))
+                     "A project by EÖDL — Austrian Dyslexia Association. Free, ad-free, no data collection. Version 1.0. Fonts: OpenDyslexic, Lexend (SIL OFL)."))
         }
     }
 }

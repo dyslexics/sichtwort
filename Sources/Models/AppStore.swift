@@ -60,6 +60,9 @@ final class AppStore: ObservableObject {
         if key.hasPrefix("custom:"), let uuid = UUID(uuidString: String(key.dropFirst(7))) {
             return customLists.first { $0.id == uuid }?.entries ?? []
         }
+        if key.hasPrefix("pack:") {
+            return PackManager.shared.list(String(key.dropFirst(5)))?.entries ?? []
+        }
         return builtinLists.first { $0.id == key }?.entries ?? []
     }
 
@@ -67,12 +70,18 @@ final class AppStore: ObservableObject {
         if key.hasPrefix("custom:"), let uuid = UUID(uuidString: String(key.dropFirst(7))) {
             return customLists.first { $0.id == uuid }?.name ?? "?"
         }
+        if key.hasPrefix("pack:") {
+            return PackManager.shared.list(String(key.dropFirst(5)))?.localizedName ?? "?"
+        }
         return builtinLists.first { $0.id == key }?.localizedName ?? "?"
     }
 
     func listLanguage(forKey key: String) -> String {
         if key.hasPrefix("custom:"), let uuid = UUID(uuidString: String(key.dropFirst(7))) {
             return customLists.first { $0.id == uuid }?.language ?? "de"
+        }
+        if key.hasPrefix("pack:") {
+            return String(key.dropFirst(5))
         }
         return builtinLists.first { $0.id == key }?.language ?? "de"
     }
@@ -93,10 +102,18 @@ final class AppStore: ObservableObject {
         profiles = state.profiles
         customLists = state.customLists
         currentProfileID = state.currentProfileID
+        // Migration v1->v2: Standard-Hintergrund wurde von Wiese auf Meer geändert;
+        // Profile mit dem alten Default einmalig umstellen.
+        if state.version < 2 {
+            for i in profiles.indices where profiles[i].settings.background == "wiese" {
+                profiles[i].settings.background = "meer"
+            }
+            save()
+        }
     }
 
     func save() {
-        let state = PersistedState(profiles: profiles, customLists: customLists, currentProfileID: currentProfileID)
+        let state = PersistedState(version: 2, profiles: profiles, customLists: customLists, currentProfileID: currentProfileID)
         if let data = try? JSONEncoder().encode(state) {
             try? data.write(to: Self.fileURL, options: .atomic)
         }

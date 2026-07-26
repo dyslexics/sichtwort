@@ -14,19 +14,40 @@ final class Speech {
         try? AVAudioSession.sharedInstance().setCategory(.playback, options: [.duckOthers])
     }
 
+    /// BCP-47-Fallback-Stimmen für alle Paket-Sprachen (nur wenn kein Clip da ist).
+    private static let fallbackVoice: [String: String] = [
+        "de": "de-DE", "en": "en-US", "es": "es-ES", "mx": "es-MX", "fr": "fr-FR",
+        "it": "it-IT", "tr": "tr-TR", "el": "el-GR", "hu": "hu-HU", "ar": "ar-SA",
+        "bs": "hr-HR", "ro": "ro-RO", "sq": "sq-AL", "uk": "uk-UA", "af": "af-ZA",
+        "nl": "nl-NL", "pt": "pt-PT", "br": "pt-BR", "da": "da-DK", "no": "nb-NO",
+        "pl": "pl-PL",
+    ]
+
     /// accent gilt nur für Englisch: "us" (Ava) oder "gb" (Sonia).
     func speak(_ text: String, language: String, accent: String = "us") {
         stop()
-        let prefix = language == "en" ? "en_\(accent == "gb" ? "gb" : "us")_" : "de_"
-        if let url = clipURL(for: text, prefix: prefix),
-           let p = try? AVAudioPlayer(contentsOf: url) {
+        // 1. Gebündelte Clips (de, en)
+        if language == "de" || language == "en" {
+            let prefix = language == "en" ? "en_\(accent == "gb" ? "gb" : "us")_" : "de_"
+            if let url = clipURL(for: text, prefix: prefix),
+               let p = try? AVAudioPlayer(contentsOf: url) {
+                player = p
+                p.play()
+                return
+            }
+        }
+        // 2. Clips aus heruntergeladenem Sprachpaket
+        if let data = PackManager.shared.clipData(language: language, word: text),
+           let p = try? AVAudioPlayer(data: data) {
             player = p
             p.play()
             return
         }
+        // 3. Fallback: System-TTS (eigene Listen, fehlende Clips)
         let utterance = AVSpeechUtterance(string: text)
-        let voice = language == "en" ? (accent == "gb" ? "en-GB" : "en-US") : "de-DE"
-        utterance.voice = AVSpeechSynthesisVoice(language: voice)
+        var code = Self.fallbackVoice[language] ?? "de-DE"
+        if language == "en" && accent == "gb" { code = "en-GB" }
+        utterance.voice = AVSpeechSynthesisVoice(language: code)
         utterance.rate = 0.42
         synth.speak(utterance)
     }
