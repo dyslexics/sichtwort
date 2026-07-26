@@ -109,8 +109,8 @@ struct HomeView: View {
                 p.settings.teacherMode = v
                 store.current = p
             })) {
-            Text(loc("Gemeinsam", "Together")).tag(true)
             Text(loc("Alleine", "On my own")).tag(false)
+            Text(loc("Gemeinsam", "Together")).tag(true)
         }
         .pickerStyle(.segmented)
         .frame(maxWidth: 420)

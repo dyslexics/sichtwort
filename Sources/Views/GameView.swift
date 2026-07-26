@@ -11,6 +11,7 @@ struct GameView: View {
 
     enum Phase {
         case countdown(Int)
+        case blank
         case flashing
         case answering
         case feedback(Bool)
@@ -338,18 +339,21 @@ struct GameView: View {
         }
     }
 
-    /// Zeigt das aktuelle Wort für exakt `flashTime` Sekunden.
+    /// 1 s Leerbild → Wort für exakt `flashTime` Sekunden → 1 s Leerbild → Antwortphase.
     private func present() {
         guard entry != nil else { return }
         typed = ""
         seqIndex = -1
-        phase = .flashing
+        phase = .blank
         flashTask?.cancel()
 
         let duration = flashTime
         let sylCount = entry?.syllableCount ?? 1
 
         flashTask = Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            guard !Task.isCancelled else { return }
+            await MainActor.run { phase = .flashing }
             if settings.syllableMode == "sequential" && sylCount > 1 && duration >= 0.5 {
                 let step = duration / Double(sylCount)
                 for i in 0..<sylCount {
@@ -362,6 +366,9 @@ struct GameView: View {
                 try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
             }
             guard !Task.isCancelled else { return }
+            await MainActor.run { phase = .blank }
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            guard !Task.isCancelled else { return }
             await MainActor.run {
                 phase = .answering
                 if !settings.teacherMode { inputFocused = true }
@@ -371,9 +378,10 @@ struct GameView: View {
 
     private func checkTyped() {
         guard let e = entry else { return }
+        // Groß-/Kleinschreibung zählt: „hund" statt „Hund" ist falsch
         let expected = e.display(swiss: settings.swissSpelling)
-            .lowercased().trimmingCharacters(in: .whitespaces)
-        let given = typed.lowercased().trimmingCharacters(in: .whitespaces)
+            .trimmingCharacters(in: .whitespaces)
+        let given = typed.trimmingCharacters(in: .whitespaces)
         guard !given.isEmpty else { return }
         mark(given == expected)
     }
