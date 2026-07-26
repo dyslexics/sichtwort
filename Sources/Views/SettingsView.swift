@@ -191,6 +191,12 @@ struct SettingsView: View {
     private var extrasSection: some View {
         Section(loc("Sprache & Ton", "Language & sound")) {
             Toggle(loc("Vorsprechen (Sprachausgabe)", "Speak words aloud"), isOn: settingsBinding.tts)
+            if store.current.settings.tts {
+                Picker(loc("Englische Stimme", "English voice"), selection: settingsBinding.englishAccent) {
+                    Text(loc("Amerikanisch (Ava)", "American (Ava)")).tag("us")
+                    Text(loc("Britisch (Sonia)", "British (Sonia)")).tag("gb")
+                }
+            }
             Toggle(loc("Schweizer Schreibweise (ss statt ß)", "Swiss spelling (ss instead of ß)"),
                    isOn: settingsBinding.swissSpelling)
         }
