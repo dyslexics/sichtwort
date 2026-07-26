@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sichtwort — Blitzlesen-Training für Kinder. Gratis, werbefrei, offline.</title>
-<meta name="description" content="Sichtwort trainiert den Sichtwortschatz: Wörter blitzen kurz auf und werden als Ganzes erkannt. Gratis, werbefrei, ohne Datensammlung, Open Source. Ein Projekt des EÖDL.">
+<title>Sichtwort — Blitzlesen-Training für Kinder in 22 Sprachen. Gratis, werbefrei, offline.</title>
+<meta name="description" content="Sichtwort trainiert den Sichtwortschatz in 22 Sprachen mit echten Vorlese-Stimmen: Wörter blitzen kurz auf und werden als Ganzes erkannt. Gratis, werbefrei, ohne Datensammlung, Open Source. Ein Projekt des EÖDL.">
 <style>
 :root { --blau: #264398; --hell: #eef2fb; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +30,12 @@ td:nth-child(2), td:nth-child(3) { text-align: center; }
 .nein { color: #b02a20; font-weight: 700; }
 footer { background: #1b2f6b; color: #cdd6ee; padding: 28px 0; font-size: .95rem; }
 footer a { color: #fff; }
+.footflex { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.footlogo { background: #fff; border-radius: 14px; padding: 10px; flex: 0 0 auto; }
+.footlogo img { display: block; height: 84px; width: 84px; }
+.langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.langs span { background: #fff; border: 1px solid #dde4f2; border-radius: 18px; padding: 5px 14px; font-weight: 700; color: var(--blau); }
+.langs span.dl { border-style: dashed; }
 .hinweis { font-size: .95rem; background: #fff8e6; border: 1px solid #eadfb2; border-radius: 12px; padding: 14px 18px; margin-top: 20px; }
 </style>
 </head>
@@ -40,7 +46,7 @@ footer a { color: #fff; }
     <h1>Sichtwort</h1>
     <p class="claim">Wörter blitzschnell erkennen — Blitzlesen-Training für Kinder</p>
     <div class="badges">
-      <span>Gratis</span><span>Werbefrei</span><span>Keine Datensammlung</span><span>Offline</span><span>Open Source</span>
+      <span>Gratis</span><span>Werbefrei</span><span>Keine Datensammlung</span><span>Offline</span><span>Open Source</span><span>22 Sprachen</span>
     </div>
     <div class="badges">
       <a class="store" href="#appstore">Bald im App&nbsp;Store (iPhone, iPad)</a>
@@ -67,14 +73,15 @@ footer a { color: #fff; }
   <div class="wrap">
     <h2>Funktionen</h2>
     <div class="grid">
-      <div class="card"><h3>Sprachausgabe</h3><p>Jedes Wort kann vorgesprochen werden — direkt auf dem Gerät, komplett offline.</p></div>
+      <div class="card"><h3>Echte Vorlese-Stimmen</h3><p>Jedes Wort wird von einer natürlichen Stimme vorgesprochen — fertig aufgenommen in der App, komplett offline. Englisch wahlweise amerikanisch oder britisch.</p></div>
       <div class="card"><h3>Silbenvisualisierung</h3><p>Silben farbig markiert oder nacheinander aufleuchtend — ideal fürs Training.</p></div>
       <div class="card"><h3>Wählbare Schrift</h3><p>Standard, OpenDyslexic oder Lexend, Schriftgröße frei einstellbar.</p></div>
       <div class="card"><h3>Abenteuer-Modus</h3><p>Die Schwierigkeit passt sich automatisch an: schneller bei Erfolg, langsamer bei Fehlern.</p></div>
       <div class="card"><h3>Fehler-Wiedervorlage</h3><p>Nicht erkannte Wörter kommen automatisch wieder, bis sie dreimal sicher gelesen wurden.</p></div>
       <div class="card"><h3>Mehrere Kinder</h3><p>Profile mit eigenen Sternen, Einstellungen und Statistiken — ohne Accounts.</p></div>
       <div class="card"><h3>Eigene Wortlisten</h3><p>Lernwörter der Woche selbst anlegen oder als CSV importieren und exportieren.</p></div>
-      <div class="card"><h3>Alles inklusive</h3><p>Grundwortschatz 500/1000, englische Sight Words, 8 Themenlisten — ohne Zusatzkäufe.</p></div>
+      <div class="card"><h3>Alles inklusive</h3><p>Grundwortschatz 500/1000, englische Sight Words (Dolch + Fry), 8 Themenlisten — ohne Zusatzkäufe.</p></div>
+      <div class="card"><h3>22 Sprachen</h3><p>Deutsch und Englisch eingebaut, 19 weitere Sprachen als kostenlose Pakete (je ca. 3 MB) — einmal laden, für immer offline.</p></div>
       <div class="card"><h3>Aufblitzzeit 0,02–5 s</h3><p>Vom Einstieg mit langen Zeiten bis zur Profi-Stufe in Hundertstelsekunden.</p></div>
     </div>
   </div>
@@ -82,10 +89,31 @@ footer a { color: #fff; }
 
 <section>
   <div class="wrap">
+    <h2>22 Sprachen — mit muttersprachlichen Stimmen</h2>
+    <p>Deutsch und Englisch (US + GB) sind fest eingebaut. 19 weitere Sprachen lädt die App auf Wunsch
+    als kostenloses Sprachpaket nach — je rund 3&nbsp;MB mit 500 Grundwortschatz-Wörtern und fertig
+    aufgenommener muttersprachlicher Stimme. Einmal geladen, funktioniert alles dauerhaft offline:</p>
+    <div class="langs">
+      <span>Deutsch</span><span>Englisch (US)</span><span>Englisch (GB)</span>
+      <span class="dl">Spanisch</span><span class="dl">Spanisch (Mexiko)</span><span class="dl">Französisch</span>
+      <span class="dl">Italienisch</span><span class="dl">Portugiesisch</span><span class="dl">Portugiesisch (Brasilien)</span>
+      <span class="dl">Niederländisch</span><span class="dl">Dänisch</span><span class="dl">Norwegisch</span>
+      <span class="dl">Polnisch</span><span class="dl">Türkisch</span><span class="dl">Griechisch</span>
+      <span class="dl">Ungarisch</span><span class="dl">Rumänisch</span><span class="dl">BKS</span>
+      <span class="dl">Albanisch</span><span class="dl">Ukrainisch</span><span class="dl">Arabisch</span>
+      <span class="dl">Afrikaans</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
     <h2>Sichtwort im Vergleich</h2>
     <table>
       <tr><th></th><th>Sichtwort</th><th>Typische Blitzlese-Apps</th></tr>
       <tr><td>Preis</td><td class="ok">gratis</td><td>Kaufpreis + In-App-Käufe</td></tr>
+      <tr><td>Sprachen</td><td class="ok">22</td><td>meist 1–2</td></tr>
+      <tr><td>Echte Vorlese-Stimmen</td><td class="ok">ja, in allen Sprachen</td><td class="nein">meist nein</td></tr>
       <tr><td>Werbung / Datensammlung</td><td class="ok">keine</td><td>unterschiedlich</td></tr>
       <tr><td>Sprachausgabe</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
       <tr><td>Silbenvisualisierung</td><td class="ok">ja</td><td class="nein">meist nein</td></tr>
@@ -98,7 +126,7 @@ footer a { color: #fff; }
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="wrap">
     <h2>Datenschutz</h2>
     <p>Sichtwort erfasst <strong>keine Daten</strong>. Keine Accounts, keine Cloud, kein Tracking,
@@ -109,10 +137,15 @@ footer a { color: #fff; }
 </section>
 
 <footer>
-  <div class="wrap">
-    <p><strong>Sichtwort</strong> — ein Projekt des <a href="https://www.legasthenie.at">EÖDL — Erster Österreichischer Dachverband Legasthenie</a>.</p>
-    <p>Diplomierte Legasthenietrainerinnen und Legasthenietrainer finden: <a href="https://www.legasthenietrainer.com">legasthenietrainer.com</a></p>
-    <p><a href="privacy.html">Datenschutz</a> · <a href="https://github.com/dyslexics/sichtwort">GitHub</a> · Kontakt: <a href="mailto:office@legasthenie.at">office@legasthenie.at</a></p>
+  <div class="wrap footflex">
+    <a class="footlogo" href="https://www.legasthenie.at" title="EÖDL — Erster Österreichischer Dachverband Legasthenie">
+      <img src="assets/eoedl-logo.png" alt="EÖDL-Logo">
+    </a>
+    <div>
+      <p><strong>Sichtwort</strong> — ein Projekt des <a href="https://www.legasthenie.at">EÖDL — Erster Österreichischer Dachverband Legasthenie</a>.</p>
+      <p>Diplomierte Legasthenietrainerinnen und Legasthenietrainer finden: <a href="https://www.legasthenietrainer.com">legasthenietrainer.com</a></p>
+      <p><a href="privacy.html">Datenschutz</a> · <a href="https://github.com/dyslexics/sichtwort">GitHub</a> · Kontakt: <a href="mailto:office@legasthenie.at">office@legasthenie.at</a></p>
+    </div>
   </div>
 </footer>
 </body>
