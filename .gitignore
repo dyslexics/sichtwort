@@ -8,3 +8,4 @@ fastlane/report.xml
 *.ipa
 tools/venv/
 __pycache__/
+fastlane/screenshots/
