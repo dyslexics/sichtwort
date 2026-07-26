@@ -229,7 +229,7 @@ struct GameView: View {
             }
             if settings.tts {
                 Button {
-                    if let e = entry { Speech.shared.speak(e.display(swiss: settings.swissSpelling), language: language) }
+                    if let e = entry { Speech.shared.speak(e.word, language: language) }
                 } label: {
                     Label(loc("Vorsprechen", "Speak"), systemImage: "speaker.wave.2.fill")
                 }
@@ -275,7 +275,7 @@ struct GameView: View {
                                 Spacer()
                                 if settings.tts {
                                     Button {
-                                        Speech.shared.speak(w.display(swiss: settings.swissSpelling), language: language)
+                                        Speech.shared.speak(w.word, language: language)
                                     } label: {
                                         Image(systemName: "speaker.wave.2.fill")
                                     }
@@ -396,7 +396,7 @@ struct GameView: View {
             flashTime = RoundEngine.adaptedTime(current: flashTime, streak: streak, lastCorrect: correct)
         }
         if settings.tts && !correct {
-            Speech.shared.speak(e.display(swiss: settings.swissSpelling), language: language)
+            Speech.shared.speak(e.word, language: language)
         }
         phase = .feedback(correct)
 
