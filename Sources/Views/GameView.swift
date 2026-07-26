@@ -28,6 +28,7 @@ struct GameView: View {
     @State private var typed = ""
     @State private var seqIndex = -1 // dynamische Silbenhervorhebung
     @State private var flashTask: Task<Void, Never>? = nil
+    @State private var shareImage: UIImage? = nil
     @FocusState private var inputFocused: Bool
 
     private var settings: ProfileSettings { store.current.settings }
@@ -298,6 +299,17 @@ struct GameView: View {
                             .padding(.vertical, 10)
                     }
                     .buttonStyle(.borderedProminent)
+                    if let img = shareImage {
+                        ShareLink(
+                            item: Image(uiImage: img),
+                            preview: SharePreview(loc("Mein Sichtwort-Ergebnis", "My Sichtwort result"),
+                                                  image: Image(uiImage: img))
+                        ) {
+                            Label(loc("Ergebnis teilen", "Share result"), systemImage: "square.and.arrow.up")
+                                .frame(maxWidth: 420)
+                        }
+                        .buttonStyle(.bordered)
+                    }
                     Button {
                         dismiss()
                     } label: {
@@ -322,6 +334,7 @@ struct GameView: View {
         correctCount = 0
         wrongWords = []
         streak = 0
+        shareImage = nil
         flashTime = settings.flashTime
         guard !plan.words.isEmpty else { dismiss(); return }
         runCountdown(3)
@@ -428,6 +441,12 @@ struct GameView: View {
             var profile = store.current
             RoundEngine.finishRound(profile: &profile, plan: plan, correct: correctCount, flashTime: flashTime)
             store.current = profile
+            shareImage = renderShareCard(profileName: profile.name,
+                                         listName: plan.listName,
+                                         correct: correctCount,
+                                         total: plan.words.count,
+                                         flashTime: flashTime,
+                                         background: settings.background)
             phase = .summary
         }
     }
