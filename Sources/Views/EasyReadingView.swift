@@ -3,8 +3,9 @@ import SwiftUI
 /// „Easy Reading": digitale Nachbildung der EASY-Reading-Leseschablone
 /// (20 × 8 cm, blaue Karte mit vier farbigen Eckfenstern). Bei „Lesen/Read"
 /// gleitet die Karte von links nach rechts, das Wort wird durch das linke
-/// obere Fenster sichtbar und anschließend vorgelesen. Darunter steht das
-/// Wort groß in Schwarz; „ABC" buchstabiert es Buchstabe für Buchstabe.
+/// obere Fenster sichtbar und anschließend vorgelesen. Bei „ABC" wandert
+/// das Fenster Buchstabe für Buchstabe mit und jeder Buchstabe wird
+/// gesprochen (immer klein: w-e-i-n). Schrift: immer OpenDyslexic.
 struct EasyReadingView: View {
     @EnvironmentObject var store: AppStore
     @Environment(\.dismiss) private var dismiss
@@ -14,12 +15,23 @@ struct EasyReadingView: View {
     @State private var spellIndex: Int? = nil
     @State private var spellTask: Task<Void, Never>? = nil
     @State private var readTask: Task<Void, Never>? = nil
-    @State private var cardSlid = false
+    /// x-Offset der Schablone; nil = Startposition links außerhalb.
+    @State private var cardX: CGFloat? = nil
+    @State private var containerW: CGFloat = 0
+    @State private var letterFrames: [Int: CGRect] = [:]
 
     private var settings: ProfileSettings { store.current.settings }
     private var language: String { store.listLanguage(forKey: settings.selectedList) }
     private var textColor: Color { .black }
     private var entry: WordEntry? { words.indices.contains(index) ? words[index] : nil }
+
+    // Geometrie der Schablone, abgeleitet aus der Containerbreite
+    private var cardW: CGFloat { containerW * 1.45 }
+    private var cardH: CGFloat { cardW / 2.5 }        // 20 × 8 cm
+    private var winW: CGFloat { cardW * 0.26 }
+    private var winH: CGFloat { cardH * 0.17 }
+    private var startX: CGFloat { 8 - containerW * 0.5 }
+    private var endX: CGFloat { 8 }
 
     // Farben der Original-Schablone
     private let cardBlue = Color(red: 0.42, green: 0.58, blue: 0.86)
@@ -74,41 +86,53 @@ struct EasyReadingView: View {
 
     // MARK: - Schablone
 
-    /// Wort + darübergleitende Schablone. Am Ende der Bewegung liegt das
-    /// linke obere Fenster genau über dem Wort.
+    /// Wort + darübergleitende Schablone. Das linke obere Fenster liegt am
+    /// Ende der Lese-Bewegung bzw. während des Buchstabierens genau über
+    /// dem aktuellen Buchstaben.
     private var cardArea: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let cardW = w * 1.45
-            let cardH = cardW / 2.5          // 20 × 8 cm
-            let winW = cardW * 0.26
-            let winH = cardH * 0.17
-            let slideOffset: CGFloat = cardSlid ? 8 : 8 - w * 0.5
-
             ZStack(alignment: .topLeading) {
-                if let e = entry {
-                    Text(e.display(swiss: settings.swissSpelling))
-                        .font(Theme.wordFont(choice: settings.fontChoice, size: winH * 0.62))
-                        .foregroundColor(.black)
-                        .minimumScaleFactor(0.3)
-                        .lineLimit(1)
-                        .frame(width: winW - 20, height: winH)
-                        .offset(x: 16, y: 0)
-                }
-                overlayCard(cardW: cardW, cardH: cardH, winW: winW, winH: winH)
-                    .offset(x: slideOffset, y: 0)
+                hiddenWord
+                overlayCard
+                    .offset(x: cardX ?? (8 - geo.size.width * 0.5), y: 0)
             }
+            .coordinateSpace(name: "easyCard")
+            .onAppear { containerW = geo.size.width }
+            .onChange(of: geo.size.width) { containerW = $0 }
         }
         .aspectRatio(1 / 0.58, contentMode: .fit)   // Höhe = cardH
+        .onPreferenceChange(LetterFramesKey.self) { letterFrames = $0 }
+    }
+
+    /// Das Wort unter der Schablone, Buchstabe für Buchstabe vermessen,
+    /// damit das Fenster beim Buchstabieren exakt mitwandern kann.
+    @ViewBuilder private var hiddenWord: some View {
+        if let e = entry {
+            let chars = Array(e.display(swiss: settings.swissSpelling))
+            HStack(spacing: 0) {
+                ForEach(chars.indices, id: \.self) { i in
+                    Text(String(chars[i]))
+                        .font(Theme.wordFont(choice: "dyslexic", size: winH * 0.55))
+                        .foregroundColor(i == spellIndex ? Theme.accent : .black)
+                        .background(GeometryReader { g in
+                            Color.clear.preference(key: LetterFramesKey.self,
+                                                   value: [i: g.frame(in: .named("easyCard"))])
+                        })
+                }
+            }
+            .lineLimit(1)
+            .frame(height: winH)
+            .padding(.leading, 16)
+        }
     }
 
     /// Die Karte selbst: blauer Körper, vier durchscheinende Eckfenster, Logo.
-    private func overlayCard(cardW: CGFloat, cardH: CGFloat,
-                             winW: CGFloat, winH: CGFloat) -> some View {
+    /// Das Lesefenster links oben glänzt (Verlauf + weiße Kante + Funkeln).
+    private var overlayCard: some View {
         ZStack {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Rectangle().fill(winLavender.opacity(0.55)).frame(width: winW)
+                    readingWindow.frame(width: winW)
                     Rectangle().fill(cardBlue)
                     Rectangle().fill(winPink.opacity(0.85)).frame(width: winW)
                 }
@@ -130,6 +154,24 @@ struct EasyReadingView: View {
         .shadow(color: .black.opacity(0.15), radius: 6, y: 3)
     }
 
+    /// Linkes oberes Fenster: heller Glanzverlauf statt totem Grau-Blau.
+    private var readingWindow: some View {
+        Rectangle()
+            .fill(LinearGradient(
+                colors: [Color.white.opacity(0.85),
+                         winLavender.opacity(0.30),
+                         Color(red: 0.72, green: 0.84, blue: 1.0).opacity(0.50)],
+                startPoint: .topLeading, endPoint: .bottomTrailing))
+            .overlay(Rectangle().strokeBorder(Color.white.opacity(0.9), lineWidth: 2))
+            .overlay(alignment: .topTrailing) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: winH * 0.32))
+                    .foregroundColor(.white)
+                    .padding(4)
+                    .shadow(color: .white, radius: 3)
+            }
+    }
+
     // MARK: - Wort unterhalb der Karte
 
     private var wordDisplay: some View {
@@ -142,7 +184,7 @@ struct EasyReadingView: View {
                             ? Theme.accent
                             : (spellIndex == nil ? textColor : textColor.opacity(0.35)))
                 }
-                .font(Theme.wordFont(choice: settings.fontChoice, size: 58, bold: true))
+                .font(Theme.wordFont(choice: "dyslexic", size: 58, bold: true))
             } else {
                 Text(loc("Keine Wörter in dieser Liste.", "No words in this list."))
                     .font(.headline)
@@ -206,20 +248,21 @@ struct EasyReadingView: View {
 
     private func move(_ delta: Int) {
         stopAll()
-        cardSlid = false
+        cardX = nil
+        letterFrames = [:]
         index = min(max(0, index + delta), max(0, words.count - 1))
     }
 
     /// Schablone gleitet von links nach rechts über das Wort, danach Audio.
     private func read() {
         stopAll()
-        cardSlid = false
+        cardX = startX
         guard let e = entry else { return }
         readTask = Task {
             try? await Task.sleep(nanoseconds: 200_000_000)
             guard !Task.isCancelled else { return }
             await MainActor.run {
-                withAnimation(.easeInOut(duration: 1.6)) { cardSlid = true }
+                withAnimation(.easeInOut(duration: 1.6)) { cardX = endX }
             }
             try? await Task.sleep(nanoseconds: 1_900_000_000)
             guard !Task.isCancelled else { return }
@@ -229,7 +272,8 @@ struct EasyReadingView: View {
         }
     }
 
-    /// Buchstabe für Buchstabe sprechen, das Wort läuft farblich mit.
+    /// Buchstabiert klein (w-e-i-n); das Lesefenster wandert Buchstabe für
+    /// Buchstabe mit, das Wort unten läuft farblich mit.
     private func spell() {
         stopAll()
         guard let e = entry else { return }
@@ -239,15 +283,21 @@ struct EasyReadingView: View {
                 guard !Task.isCancelled else { return }
                 await MainActor.run {
                     spellIndex = i
+                    if let f = letterFrames[i] {
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            cardX = f.midX - winW / 2
+                        }
+                    }
                     Speech.shared.speakLetter(String(chars[i]), language: language,
                                               accent: settings.englishAccent)
                 }
                 try? await Task.sleep(nanoseconds: 900_000_000)
             }
             guard !Task.isCancelled else { return }
-            // Zum Abschluss das ganze Wort einmal am Stück.
+            // Zum Abschluss das ganze Wort einmal am Stück, Fenster zum Wortanfang.
             await MainActor.run {
                 spellIndex = nil
+                withAnimation(.easeInOut(duration: 0.5)) { cardX = endX }
                 Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
             }
         }
@@ -260,5 +310,13 @@ struct EasyReadingView: View {
         readTask?.cancel()
         readTask = nil
         Speech.shared.stop()
+    }
+}
+
+/// Buchstaben-Positionen im Koordinatenraum "easyCard".
+private struct LetterFramesKey: PreferenceKey {
+    static var defaultValue: [Int: CGRect] = [:]
+    static func reduce(value: inout [Int: CGRect], nextValue: () -> [Int: CGRect]) {
+        value.merge(nextValue()) { _, new in new }
     }
 }

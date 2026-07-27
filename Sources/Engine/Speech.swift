@@ -54,13 +54,15 @@ final class Speech {
 
     /// Buchstabiert einen einzelnen Buchstaben (immer System-TTS —
     /// Buchstabennamen wie „Be", „eS", „Eszett" liefert nur der Synthesizer).
+    /// Immer kleingeschrieben: „Wein" wird w-e-i-n buchstabiert,
+    /// unabhängig von der Schreibweise.
     func speakLetter(_ letter: String, language: String, accent: String = "us") {
         player?.stop()
         player = nil
         synth.stopSpeaking(at: .immediate)
         var code = Self.fallbackVoice[language] ?? "de-DE"
         if language == "en" && accent == "gb" { code = "en-GB" }
-        let utterance = AVSpeechUtterance(string: letter.uppercased())
+        let utterance = AVSpeechUtterance(string: letter.lowercased())
         utterance.voice = AVSpeechSynthesisVoice(language: code)
         utterance.rate = 0.35
         synth.speak(utterance)

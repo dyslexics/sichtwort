@@ -13,7 +13,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: at.legasthenie.sichtwort
         MARKETING_VERSION: "1.0"
-        CURRENT_PROJECT_VERSION: "12"     # VOR JEDEM UPLOAD HOCHZÄHLEN!
+        CURRENT_PROJECT_VERSION: "13"     # VOR JEDEM UPLOAD HOCHZÄHLEN!
         DEVELOPMENT_TEAM: FQZ492F2YC
         CODE_SIGN_STYLE: Manual
         CODE_SIGN_IDENTITY: "Apple Distribution"
@@ -36,7 +36,8 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         ITSAppUsesNonExemptEncryption: false
+        # xcodegen kopiert Resources FLACH ins Bundle — kein Fonts/-Präfix!
         UIAppFonts:
-          - Fonts/OpenDyslexic-Regular.otf
-          - Fonts/OpenDyslexic-Bold.otf
-          - Fonts/Lexend-Regular.ttf
+          - OpenDyslexic-Regular.otf
+          - OpenDyslexic-Bold.otf
+          - Lexend-Regular.ttf
