@@ -25,13 +25,15 @@ struct EasyReadingView: View {
     private var textColor: Color { .black }
     private var entry: WordEntry? { words.indices.contains(index) ? words[index] : nil }
 
-    // Geometrie der Schablone, abgeleitet aus der Containerbreite
-    private var cardW: CGFloat { containerW * 1.45 }
+    // Geometrie der Schablone, abgeleitet aus der Containerbreite.
+    // Deutlich größer als der Bildschirm und leicht nach links geschoben —
+    // wie die echte Karte, die man übers Blatt schiebt.
+    private var cardW: CGFloat { containerW * 2.2 }
     private var cardH: CGFloat { cardW / 2.5 }        // 20 × 8 cm
     private var winW: CGFloat { cardW * 0.26 }
     private var winH: CGFloat { cardH * 0.17 }
-    private var startX: CGFloat { 8 - containerW * 0.5 }
-    private var endX: CGFloat { 8 }
+    private var startX: CGFloat { -20 - containerW * 0.5 }
+    private var endX: CGFloat { -20 }
 
     // Farben der Original-Schablone
     private let cardBlue = Color(red: 0.42, green: 0.58, blue: 0.86)
@@ -48,12 +50,9 @@ struct EasyReadingView: View {
                 header
                 Spacer()
                 cardArea
-                    .scaleEffect(1.2)
-                    .offset(y: -40)
-                wordDisplay
-                    .padding(.top, 40)
-                    .offset(y: -40)
                 Spacer()
+                wordDisplay
+                    .padding(.bottom, 10)
                 navRow
                     .padding(.bottom, 18)
                 bottomButtons
@@ -103,7 +102,7 @@ struct EasyReadingView: View {
             .onAppear { containerW = geo.size.width }
             .onChange(of: geo.size.width) { containerW = $0 }
         }
-        .aspectRatio(1 / 0.58, contentMode: .fit)   // Höhe = cardH
+        .aspectRatio(1 / 0.88, contentMode: .fit)   // Höhe = cardH (2,2 / 2,5)
         .onPreferenceChange(LetterFramesKey.self) { letterFrames = $0 }
     }
 
@@ -162,7 +161,7 @@ struct EasyReadingView: View {
         Rectangle().fill(winLavender.opacity(0.55))
     }
 
-    // MARK: - Wort unterhalb der Karte
+    // MARK: - Wort klein über den Pfeilen
 
     private var wordDisplay: some View {
         Group {
@@ -174,14 +173,14 @@ struct EasyReadingView: View {
                             ? Theme.accent
                             : (spellIndex == nil ? textColor : textColor.opacity(0.35)))
                 }
-                .font(.system(size: 70, weight: .black))   // 58 × 1,2
+                .font(.system(size: 20, weight: .semibold))
             } else {
                 Text(loc("Keine Wörter in dieser Liste.", "No words in this list."))
                     .font(.headline)
                     .foregroundColor(textColor.opacity(0.7))
             }
         }
-        .minimumScaleFactor(0.3)
+        .minimumScaleFactor(0.5)
         .lineLimit(1)
         .padding(.horizontal)
     }
