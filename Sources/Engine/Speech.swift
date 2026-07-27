@@ -24,7 +24,11 @@ final class Speech {
     ]
 
     /// accent gilt nur für Englisch: "us" (Ava) oder "gb" (Sonia).
-    func speak(_ text: String, language: String, accent: String = "us") {
+    /// Gibt die Länge des abgespielten Clips zurück, oder nil beim System-TTS
+    /// (dessen Dauer steht vorab nicht fest). Aufrufer, die den Takt danach
+    /// richten wollen — etwa das Buchstabieren — brauchen diesen Wert.
+    @discardableResult
+    func speak(_ text: String, language: String, accent: String = "us") -> TimeInterval? {
         stop()
         // 1. Gebündelte Clips (de, en)
         if language == "de" || language == "en" {
@@ -33,7 +37,7 @@ final class Speech {
                let p = try? AVAudioPlayer(contentsOf: url) {
                 player = p
                 p.play()
-                return
+                return p.duration
             }
         }
         // 2. Clips aus heruntergeladenem Sprachpaket
@@ -41,7 +45,7 @@ final class Speech {
            let p = try? AVAudioPlayer(data: data) {
             player = p
             p.play()
-            return
+            return p.duration
         }
         // 3. Fallback: System-TTS (eigene Listen, fehlende Clips)
         let utterance = AVSpeechUtterance(string: text)
@@ -50,13 +54,15 @@ final class Speech {
         utterance.voice = AVSpeechSynthesisVoice(language: code)
         utterance.rate = 0.42
         synth.speak(utterance)
+        return nil
     }
 
     /// Buchstabiert einen einzelnen Buchstaben — dieselbe Clip-Kette wie
     /// speak() (gebündelter Clip → Sprachpaket → System-TTS), damit Wort und
     /// Buchstaben mit derselben Stimme gesprochen werden. Immer kleingeschrieben:
     /// „Wein" wird w-e-i-n buchstabiert, unabhängig von der Schreibweise.
-    func speakLetter(_ letter: String, language: String, accent: String = "us") {
+    @discardableResult
+    func speakLetter(_ letter: String, language: String, accent: String = "us") -> TimeInterval? {
         speak(letter.lowercased(), language: language, accent: accent)
     }
 

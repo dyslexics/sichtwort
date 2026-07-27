@@ -9,3 +9,4 @@ fastlane/report.xml
 tools/venv/
 __pycache__/
 fastlane/screenshots/
+scratchpad/

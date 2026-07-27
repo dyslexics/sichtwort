@@ -10,6 +10,15 @@ struct EasyReadingView: View {
     @EnvironmentObject var store: AppStore
     @Environment(\.dismiss) private var dismiss
 
+    /// Pause zwischen zwei Buchstaben beim Buchstabieren, gemessen ab Clipende.
+    /// Zusammen mit der Stille am Clipende ergibt das rund 0,45 s Atem und einen
+    /// Takt von etwa 0,77 s — der Rhythmus der Vorlage auf
+    /// h15.drcag.com/STIMMEN/BUCHSTABIEREN/ („D, E, U, T, L, I, C, H — deutlich.").
+    private static let letterGapSeconds: TimeInterval = 0.31
+    /// Nur für Sprachen ohne Clip, wo das System-TTS spricht und die Dauer
+    /// vorab unbekannt ist.
+    private static let fallbackLetterSeconds: TimeInterval = 0.55
+
     @State private var words: [WordEntry] = []
     @State private var index = 0
     @State private var spellIndex: Int? = nil
@@ -271,17 +280,22 @@ struct EasyReadingView: View {
         spellTask = Task {
             for i in chars.indices {
                 guard !Task.isCancelled else { return }
-                await MainActor.run {
+                let clip = await MainActor.run { () -> TimeInterval? in
                     spellIndex = i
                     if let f = letterFrames[i] {
                         withAnimation(.easeInOut(duration: 0.35)) {
                             cardX = f.maxX + 10 - winW
                         }
                     }
-                    Speech.shared.speakLetter(String(chars[i]), language: language,
-                                              accent: settings.englishAccent)
+                    return Speech.shared.speakLetter(String(chars[i]), language: language,
+                                                     accent: settings.englishAccent)
                 }
-                try? await Task.sleep(nanoseconds: 900_000_000)
+                // Nach dem Clip immer dieselbe Pause — nicht ein fester Takt.
+                // Sonst hängt die Pause an der Cliplänge und „Ypsilon" (0,74 s)
+                // ginge fast ohne Atem in den nächsten Buchstaben über, während
+                // kurze Buchstaben zu lange stehen.
+                let wait = (clip ?? Self.fallbackLetterSeconds) + Self.letterGapSeconds
+                try? await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000))
             }
             guard !Task.isCancelled else { return }
             // Zum Abschluss das ganze Wort einmal am Stück, Fenster zum Wortanfang.
