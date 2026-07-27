@@ -27,6 +27,30 @@ platform :ios do
     sigh(app_identifier: "at.legasthenie.sichtwort", output_path: "build")
   end
 
+  desc "Build der internen Testgruppe zuweisen"
+  lane :distribute do |o|
+    app = Spaceship::ConnectAPI::App.find("at.legasthenie.sichtwort")
+    build = app.get_builds(includes: "betaGroups").find { |b| b.version == (o[:build] || "17").to_s }
+    UI.user_error!("Build nicht gefunden") unless build
+    app.get_beta_groups.each do |g|
+      UI.message("Gruppe: #{g.name} intern=#{g.is_internal_group}")
+    end
+    grp = app.get_beta_groups.find { |g| g.is_internal_group }
+    if grp
+      build.add_beta_groups(beta_groups: [grp]) rescue UI.message("schon zugewiesen")
+      UI.success("Build #{build.version} -> #{grp.name}")
+    end
+  end
+
+  desc "TestFlight-Builds auflisten (Verifikation nach dem Upload)"
+  lane :builds do
+    app = Spaceship::ConnectAPI::App.find("at.legasthenie.sichtwort")
+    app.get_builds(includes: "preReleaseVersion,buildBetaDetail").first(5).each do |b|
+      state = b.build_beta_detail&.external_build_state || b.processing_state
+      UI.message("Build #{b.version} (#{b.pre_release_version&.version}) -> #{state}")
+    end
+  end
+
   desc "IPA nach TestFlight hochladen"
   lane :upload do
     pilot(
