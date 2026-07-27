@@ -87,12 +87,18 @@ final class PackManager: ObservableObject {
                                          "Download failed — please check your internet connection.")
                     return
                 }
+                // Caches der alten Paketversion verwerfen (Update-Fall)
+                self.indexCache[code] = nil
+                self.dataCache[code] = nil
+                self.blobOffset[code] = nil
                 if self.loadIndex(code) == nil {
                     try? FileManager.default.removeItem(at: Self.fileURL(code))
                     self.lastError = loc("Paket beschädigt — bitte erneut versuchen.",
                                          "Package corrupted — please try again.")
                 } else {
                     self.downloaded.insert(code)
+                    UserDefaults.standard.set(self.availableVersion(code),
+                                              forKey: "packVersion.\(code)")
                 }
             }
         }
@@ -100,6 +106,18 @@ final class PackManager: ObservableObject {
             DispatchQueue.main.async { self?.progress[code] = p.fractionCompleted }
         }
         task.resume()
+    }
+
+    func availableVersion(_ code: String) -> Int {
+        available.first { $0.code == code }?.version ?? 1
+    }
+
+    /// Manifest kennt eine neuere Paketversion als die heruntergeladene
+    /// (Bestandsdownloads ohne gespeicherte Version gelten als Version 1).
+    func updateAvailable(_ code: String) -> Bool {
+        guard downloaded.contains(code) else { return false }
+        let stored = UserDefaults.standard.object(forKey: "packVersion.\(code)") as? Int ?? 1
+        return stored < availableVersion(code)
     }
 
     func delete(_ code: String) {

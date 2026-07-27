@@ -112,7 +112,7 @@ struct EasyReadingView: View {
             HStack(spacing: 0) {
                 ForEach(chars.indices, id: \.self) { i in
                     Text(String(chars[i]))
-                        .font(Theme.wordFont(choice: "dyslexic", size: winH * 0.55))
+                        .font(.system(size: winH * 0.55, weight: .black))
                         .foregroundColor(i == spellIndex ? Theme.accent : .black)
                         .background(GeometryReader { g in
                             Color.clear.preference(key: LetterFramesKey.self,
@@ -184,7 +184,7 @@ struct EasyReadingView: View {
                             ? Theme.accent
                             : (spellIndex == nil ? textColor : textColor.opacity(0.35)))
                 }
-                .font(Theme.wordFont(choice: "dyslexic", size: 58, bold: true))
+                .font(.system(size: 58, weight: .black))
             } else {
                 Text(loc("Keine Wörter in dieser Liste.", "No words in this list."))
                     .font(.headline)
@@ -272,8 +272,9 @@ struct EasyReadingView: View {
         }
     }
 
-    /// Buchstabiert klein (w-e-i-n); das Lesefenster wandert Buchstabe für
-    /// Buchstabe mit, das Wort unten läuft farblich mit.
+    /// Buchstabiert klein (w-e-i-n); das Lesefenster gibt pro Schritt genau
+    /// einen Buchstaben mehr frei (rechte Fensterkante wandert Buchstabe für
+    /// Buchstabe nach rechts), das Wort unten läuft farblich mit.
     private func spell() {
         stopAll()
         guard let e = entry else { return }
@@ -285,7 +286,7 @@ struct EasyReadingView: View {
                     spellIndex = i
                     if let f = letterFrames[i] {
                         withAnimation(.easeInOut(duration: 0.35)) {
-                            cardX = f.midX - winW / 2
+                            cardX = f.maxX + 10 - winW
                         }
                     }
                     Speech.shared.speakLetter(String(chars[i]), language: language,

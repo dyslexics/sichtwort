@@ -149,6 +149,19 @@ struct ListsView: View {
                             .foregroundColor(.secondary)
                     }
                     Spacer()
+                    if packs.progress[pack.code] != nil {
+                        ProgressView().frame(width: 30)
+                    } else if packs.updateAvailable(pack.code) {
+                        Button {
+                            packs.download(pack.code)
+                        } label: {
+                            Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
+                                .font(.title3)
+                                .foregroundColor(.orange)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel(loc("Paket aktualisieren", "Update pack"))
+                    }
                     if selectedKey == key {
                         Image(systemName: "checkmark.circle.fill").foregroundColor(Theme.accent)
                     }

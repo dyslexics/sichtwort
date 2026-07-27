@@ -56,6 +56,18 @@ def build(code, wl_dir, audio_root, out_dir):
         d = open(f, "rb").read()
         clips[w] = [len(blob), len(d)]
         blob.extend(d)
+    # Buchstabennamen fürs Buchstabieren (Easy Reading), seit Paket-Version 2.
+    letters = sorted({ch for syl, _ in wl["words"]
+                      for ch in syl.replace("-", "").lower() if ch.isalpha()})
+    for l in letters:
+        if l in clips:
+            continue
+        f = os.path.join(adir, f"{code}_{md5(l)}.mp3")
+        if not os.path.exists(f):
+            missing.append(l); continue
+        d = open(f, "rb").read()
+        clips[l] = [len(blob), len(d)]
+        blob.extend(d)
     index = json.dumps({"list": wl, "voice": VOICES[code], "clips": clips},
                        ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     out = os.path.join(out_dir, f"{code}.swpack")
@@ -69,7 +81,7 @@ def build(code, wl_dir, audio_root, out_dir):
     print(f"{code}: {len(clips)} Clips, {len(missing)} fehlend, {size/1e6:.2f} MB" +
           (f" MISSING={missing[:5]}" if missing else ""))
     return {"code": code, "nameDE": MANIFEST_NAMES[code][0], "nameEN": MANIFEST_NAMES[code][1],
-            "voice": VOICES[code], "sizeMB": round(size / 1e6, 1), "version": 1}, len(missing)
+            "voice": VOICES[code], "sizeMB": round(size / 1e6, 1), "version": 2}, len(missing)
 
 if __name__ == "__main__":
     wl_dir, audio_root, out_dir = sys.argv[1], sys.argv[2], sys.argv[3]

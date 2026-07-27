@@ -4,151 +4,151 @@
   "nameDE": "Spanisch",
   "nameEN": "Spanish",
   "voice": "Elvira",
-  "sizeMB": 2.8,
-  "version": 1
+  "sizeMB": 3.0,
+  "version": 2
  },
  {
   "code": "mx",
   "nameDE": "Spanisch (Mexiko)",
   "nameEN": "Spanish (Mexico)",
   "voice": "Dalia",
-  "sizeMB": 2.8,
-  "version": 1
+  "sizeMB": 2.9,
+  "version": 2
  },
  {
   "code": "fr",
   "nameDE": "Französisch",
   "nameEN": "French",
   "voice": "Denise",
-  "sizeMB": 2.6,
-  "version": 1
+  "sizeMB": 2.7,
+  "version": 2
  },
  {
   "code": "it",
   "nameDE": "Italienisch",
   "nameEN": "Italian",
   "voice": "Elsa",
-  "sizeMB": 3.1,
-  "version": 1
+  "sizeMB": 3.2,
+  "version": 2
  },
  {
   "code": "pt",
   "nameDE": "Portugiesisch",
   "nameEN": "Portuguese",
   "voice": "Raquel",
-  "sizeMB": 3.2,
-  "version": 1
+  "sizeMB": 3.4,
+  "version": 2
  },
  {
   "code": "br",
   "nameDE": "Portugiesisch (Brasilien)",
   "nameEN": "Portuguese (Brazil)",
   "voice": "Francisca",
-  "sizeMB": 2.8,
-  "version": 1
+  "sizeMB": 2.9,
+  "version": 2
  },
  {
   "code": "nl",
   "nameDE": "Niederländisch",
   "nameEN": "Dutch",
   "voice": "Fenna",
-  "sizeMB": 2.8,
-  "version": 1
+  "sizeMB": 2.9,
+  "version": 2
  },
  {
   "code": "da",
   "nameDE": "Dänisch",
   "nameEN": "Danish",
   "voice": "Christel",
-  "sizeMB": 2.4,
-  "version": 1
+  "sizeMB": 2.5,
+  "version": 2
  },
  {
   "code": "no",
   "nameDE": "Norwegisch",
   "nameEN": "Norwegian",
   "voice": "Pernille",
-  "sizeMB": 2.5,
-  "version": 1
+  "sizeMB": 2.6,
+  "version": 2
  },
  {
   "code": "pl",
   "nameDE": "Polnisch",
   "nameEN": "Polish",
   "voice": "Zofia",
-  "sizeMB": 2.9,
-  "version": 1
+  "sizeMB": 3.1,
+  "version": 2
  },
  {
   "code": "tr",
   "nameDE": "Türkisch",
   "nameEN": "Turkish",
   "voice": "Emel",
-  "sizeMB": 2.7,
-  "version": 1
+  "sizeMB": 2.8,
+  "version": 2
  },
  {
   "code": "el",
   "nameDE": "Griechisch",
   "nameEN": "Greek",
   "voice": "Athina",
-  "sizeMB": 2.9,
-  "version": 1
+  "sizeMB": 3.1,
+  "version": 2
  },
  {
   "code": "hu",
   "nameDE": "Ungarisch",
   "nameEN": "Hungarian",
   "voice": "Noémi",
-  "sizeMB": 3.0,
-  "version": 1
+  "sizeMB": 3.2,
+  "version": 2
  },
  {
   "code": "ro",
   "nameDE": "Rumänisch",
   "nameEN": "Romanian",
   "voice": "Alina",
-  "sizeMB": 3.0,
-  "version": 1
+  "sizeMB": 3.1,
+  "version": 2
  },
  {
   "code": "bs",
   "nameDE": "BKS (Bosnisch/Kroatisch/Serbisch)",
   "nameEN": "Bosnian/Croatian/Serbian",
   "voice": "Vesna",
-  "sizeMB": 2.8,
-  "version": 1
+  "sizeMB": 2.9,
+  "version": 2
  },
  {
   "code": "sq",
   "nameDE": "Albanisch",
   "nameEN": "Albanian",
   "voice": "Anila",
-  "sizeMB": 2.6,
-  "version": 1
+  "sizeMB": 2.7,
+  "version": 2
  },
  {
   "code": "uk",
   "nameDE": "Ukrainisch",
   "nameEN": "Ukrainian",
   "voice": "Polina",
-  "sizeMB": 2.9,
-  "version": 1
+  "sizeMB": 3.0,
+  "version": 2
  },
  {
   "code": "ar",
   "nameDE": "Arabisch",
   "nameEN": "Arabic",
   "voice": "Zariyah",
-  "sizeMB": 2.9,
-  "version": 1
+  "sizeMB": 3.1,
+  "version": 2
  },
  {
   "code": "af",
   "nameDE": "Afrikaans",
   "nameEN": "Afrikaans",
   "voice": "Adri",
-  "sizeMB": 2.4,
-  "version": 1
+  "sizeMB": 2.5,
+  "version": 2
  }
 ]
