@@ -48,8 +48,11 @@ struct EasyReadingView: View {
                 header
                 Spacer()
                 cardArea
+                    .scaleEffect(1.2)
+                    .offset(y: -40)
                 wordDisplay
-                    .padding(.top, 30)
+                    .padding(.top, 40)
+                    .offset(y: -40)
                 Spacer()
                 navRow
                     .padding(.bottom, 18)
@@ -154,22 +157,9 @@ struct EasyReadingView: View {
         .shadow(color: .black.opacity(0.15), radius: 6, y: 3)
     }
 
-    /// Linkes oberes Fenster: heller Glanzverlauf statt totem Grau-Blau.
+    /// Linkes oberes Fenster: durchscheinendes Lavendel wie beim Original.
     private var readingWindow: some View {
-        Rectangle()
-            .fill(LinearGradient(
-                colors: [Color.white.opacity(0.85),
-                         winLavender.opacity(0.30),
-                         Color(red: 0.72, green: 0.84, blue: 1.0).opacity(0.50)],
-                startPoint: .topLeading, endPoint: .bottomTrailing))
-            .overlay(Rectangle().strokeBorder(Color.white.opacity(0.9), lineWidth: 2))
-            .overlay(alignment: .topTrailing) {
-                Image(systemName: "sparkles")
-                    .font(.system(size: winH * 0.32))
-                    .foregroundColor(.white)
-                    .padding(4)
-                    .shadow(color: .white, radius: 3)
-            }
+        Rectangle().fill(winLavender.opacity(0.55))
     }
 
     // MARK: - Wort unterhalb der Karte
@@ -184,7 +174,7 @@ struct EasyReadingView: View {
                             ? Theme.accent
                             : (spellIndex == nil ? textColor : textColor.opacity(0.35)))
                 }
-                .font(.system(size: 58, weight: .black))
+                .font(.system(size: 70, weight: .black))   // 58 × 1,2
             } else {
                 Text(loc("Keine Wörter in dieser Liste.", "No words in this list."))
                     .font(.headline)
