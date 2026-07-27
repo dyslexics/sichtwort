@@ -52,6 +52,20 @@ final class Speech {
         synth.speak(utterance)
     }
 
+    /// Buchstabiert einen einzelnen Buchstaben (immer System-TTS —
+    /// Buchstabennamen wie „Be", „eS", „Eszett" liefert nur der Synthesizer).
+    func speakLetter(_ letter: String, language: String, accent: String = "us") {
+        player?.stop()
+        player = nil
+        synth.stopSpeaking(at: .immediate)
+        var code = Self.fallbackVoice[language] ?? "de-DE"
+        if language == "en" && accent == "gb" { code = "en-GB" }
+        let utterance = AVSpeechUtterance(string: letter.uppercased())
+        utterance.voice = AVSpeechSynthesisVoice(language: code)
+        utterance.rate = 0.35
+        synth.speak(utterance)
+    }
+
     private func clipURL(for word: String, prefix: String) -> URL? {
         let digest = Insecure.MD5.hash(data: Data(word.utf8))
         let hex = digest.map { String(format: "%02x", $0) }.joined()

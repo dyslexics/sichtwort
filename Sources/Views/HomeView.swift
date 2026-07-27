@@ -4,6 +4,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var store: AppStore
     @State private var showGame = false
+    @State private var showEasyReading = false
 
     private var settings: ProfileSettings { store.current.settings }
     private var darkBG: Bool { Theme.isDarkBackground(settings.background) }
@@ -37,6 +38,17 @@ struct HomeView: View {
                         .buttonStyle(.borderedProminent)
                         .padding(.top, 4)
 
+                        Button {
+                            showEasyReading = true
+                        } label: {
+                            Label("Easy Reading", systemImage: "book.fill")
+                                .font(.title3.bold())
+                                .frame(maxWidth: 420)
+                                .padding(.vertical, 12)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(darkBG ? .white : Theme.accent)
+
                         modeToggle
                     }
                     .padding()
@@ -44,6 +56,9 @@ struct HomeView: View {
             }
             .fullScreenCover(isPresented: $showGame) {
                 GameView()
+            }
+            .fullScreenCover(isPresented: $showEasyReading) {
+                EasyReadingView()
             }
         }
     }
