@@ -14,13 +14,12 @@ struct EasyReadingView: View {
 
     private var settings: ProfileSettings { store.current.settings }
     private var language: String { store.listLanguage(forKey: settings.selectedList) }
-    private var darkBG: Bool { Theme.isDarkBackground(settings.background) }
-    private var textColor: Color { darkBG ? .white : .primary }
+    private var textColor: Color { .black }
     private var entry: WordEntry? { words.indices.contains(index) ? words[index] : nil }
 
     var body: some View {
         ZStack {
-            Theme.background(settings.background).ignoresSafeArea()
+            Color.white.ignoresSafeArea()
             VStack(spacing: 0) {
                 header
                 Spacer()
@@ -67,10 +66,10 @@ struct EasyReadingView: View {
                 chars.indices.reduce(Text("")) { acc, i in
                     acc + Text(String(chars[i]))
                         .foregroundColor(i == spellIndex
-                            ? (darkBG ? .orange : Theme.accent)
+                            ? Theme.accent
                             : (spellIndex == nil ? textColor : textColor.opacity(0.35)))
                 }
-                .font(Theme.wordFont(choice: settings.fontChoice, size: settings.fontSize, bold: true))
+                .font(Theme.wordFont(choice: settings.fontChoice, size: 58, bold: true))
             } else {
                 Text(loc("Keine Wörter in dieser Liste.", "No words in this list."))
                     .font(.headline)
@@ -80,6 +79,7 @@ struct EasyReadingView: View {
         .minimumScaleFactor(0.3)
         .lineLimit(1)
         .padding(.horizontal)
+        .offset(y: -150)
     }
 
     private var navRow: some View {
@@ -97,7 +97,7 @@ struct EasyReadingView: View {
             .disabled(index >= words.count - 1)
             .accessibilityLabel(loc("Nächstes Wort", "Next word"))
         }
-        .foregroundColor(darkBG ? .white : Theme.accent)
+        .foregroundColor(Theme.accent)
     }
 
     private var bottomButtons: some View {
@@ -108,7 +108,7 @@ struct EasyReadingView: View {
                     Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
                 }
             } label: {
-                Label(loc("Vorlesen", "Speak"), systemImage: "speaker.wave.2.fill")
+                Label(loc("Lesen", "Read"), systemImage: "speaker.wave.2.fill")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
@@ -116,7 +116,7 @@ struct EasyReadingView: View {
             .buttonStyle(.borderedProminent)
 
             Button(action: spell) {
-                Label(loc("Buchstabieren", "Pronounce"), systemImage: "textformat.abc")
+                Text("ABC")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
