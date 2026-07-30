@@ -1,11 +1,12 @@
 import SwiftUI
 
-/// „Easy Reading": digitale Nachbildung der EASY-Reading-Leseschablone
+/// Leseschablone (Easy Reading): digitale Nachbildung der EASY-Reading-Leseschablone
 /// (20 × 8 cm, blaue Karte mit vier farbigen Eckfenstern). Bei „Lesen/Read"
 /// gleitet die Karte von links nach rechts, das Wort wird durch das linke
 /// obere Fenster sichtbar und anschließend vorgelesen. Bei „ABC" wandert
 /// das Fenster Buchstabe für Buchstabe mit und jeder Buchstabe wird
 /// gesprochen (immer klein: w-e-i-n). Schrift: immer OpenDyslexic.
+/// Pro Wort einmal 1 Stern, wenn Lesen oder ABC abgeschlossen wurde.
 struct EasyReadingView: View {
     @EnvironmentObject var store: AppStore
     @Environment(\.dismiss) private var dismiss
@@ -28,6 +29,8 @@ struct EasyReadingView: View {
     @State private var cardX: CGFloat? = nil
     @State private var containerW: CGFloat = 0
     @State private var letterFrames: [Int: CGRect] = [:]
+    /// Indizes, für die in dieser Sitzung schon ein Stern vergeben wurde.
+    @State private var rewardedWordIndices: Set<Int> = []
 
     private var settings: ProfileSettings { store.current.settings }
     private var language: String { store.listLanguage(forKey: settings.selectedList) }
@@ -73,7 +76,7 @@ struct EasyReadingView: View {
     }
 
     private var header: some View {
-        HStack {
+        HStack(alignment: .center) {
             Button {
                 stopAll()
                 dismiss()
@@ -83,14 +86,31 @@ struct EasyReadingView: View {
                     .foregroundColor(textColor.opacity(0.5))
             }
             .accessibilityLabel(loc("Schließen", "Close"))
-            Spacer()
-            Text("Easy Reading")
-                .font(.headline)
-                .foregroundColor(textColor.opacity(0.7))
-            Spacer()
-            Text(words.isEmpty ? "" : "\(index + 1) / \(words.count)")
-                .font(.headline.monospacedDigit())
-                .foregroundColor(textColor.opacity(0.7))
+
+            Spacer(minLength: 8)
+
+            VStack(spacing: 1) {
+                Text(loc("Leseschablone", "Reading template"))
+                    .font(.headline)
+                    .foregroundColor(textColor.opacity(0.8))
+                Text("Easy Reading")
+                    .font(.caption.weight(.semibold))
+                    .foregroundColor(textColor.opacity(0.55))
+            }
+
+            Spacer(minLength: 8)
+
+            VStack(alignment: .trailing, spacing: 2) {
+                Label("\(store.current.stars)", systemImage: "star.fill")
+                    .font(.headline)
+                    .foregroundColor(.orange)
+                    .accessibilityLabel(loc("\(store.current.stars) Sterne",
+                                            "\(store.current.stars) stars"))
+                Text(words.isEmpty ? "" : "\(index + 1) / \(words.count)")
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundColor(textColor.opacity(0.7))
+            }
+            .frame(minWidth: 56, alignment: .trailing)
         }
         .padding(.top, 8)
     }
@@ -266,6 +286,7 @@ struct EasyReadingView: View {
             guard !Task.isCancelled else { return }
             await MainActor.run {
                 Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
+                awardStarForCurrentWord()
             }
         }
     }
@@ -303,8 +324,18 @@ struct EasyReadingView: View {
                 spellIndex = nil
                 withAnimation(.easeInOut(duration: 0.5)) { cardX = endX }
                 Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
+                awardStarForCurrentWord()
             }
         }
+    }
+
+    /// Ein Stern pro Wort und Sitzung — nach abgeschlossenem Lesen oder ABC.
+    private func awardStarForCurrentWord() {
+        guard !rewardedWordIndices.contains(index) else { return }
+        rewardedWordIndices.insert(index)
+        var profile = store.current
+        profile.stars += 1
+        store.current = profile
     }
 
     private func stopAll() {
