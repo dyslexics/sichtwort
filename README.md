@@ -11,6 +11,16 @@ beim Lesen. Ein Projekt des [EÖDL — Erster Österreichischer Dachverband Lega
 - **Aufblitzzeit 0,02–5 Sekunden**, frei einstellbar; Wiederholen-Button mit exakt gleicher Dauer
 - **Gemeinsam-Modus** (Erwachsener bewertet) und **Alleine-Modus** (Kind tippt, tolerante Prüfung)
 - **Sprachausgabe** (on-device, offline) — das Kind hört, wie das Wort korrekt klingt
+- **Easy-Reading-Overlay**: digitale Nachbildung der EASY-Reading™-Leseschablone — die blaue
+  Karte mit Lesefenster gleitet über das Wort. „Read" liest das ganze Wort vor, „ABC"
+  buchstabiert es Buchstabe für Buchstabe; das Fenster wandert mit, jeder Buchstabe wird
+  mit seinem echten Buchstabennamen gesprochen
+- **21 Sprachen**: Deutsch und Englisch (US-/GB-Stimme umschaltbar) sind integriert; 19 weitere
+  Sprachen als gratis Sprachpakete direkt in der App ladbar — Spanisch, Spanisch (Mexiko),
+  Französisch, Italienisch, Portugiesisch, Portugiesisch (Brasilien), Niederländisch, Dänisch,
+  Norwegisch, Polnisch, Türkisch, Griechisch, Ungarisch, Rumänisch, BKS (Bosnisch/Kroatisch/
+  Serbisch), Albanisch, Ukrainisch, Arabisch, Afrikaans. Jedes Paket: die 500 häufigsten
+  Wörter der Sprache mit nativer Sprachausgabe, nach dem Download komplett offline
 - **Silbenvisualisierung**: farbig alternierend oder Silben nacheinander aufleuchtend
 - **Schriftwahl**: Standard, OpenDyslexic, Lexend + Schriftgrößenregler
 - **Abenteuer-Modus**: adaptive Schwierigkeit (schneller bei Erfolg, langsamer bei Fehlern)
