@@ -38,18 +38,24 @@ struct HomeView: View {
                         .buttonStyle(.borderedProminent)
                         .padding(.top, 4)
 
+                        modeToggle
+
                         Button {
                             showEasyReading = true
                         } label: {
-                            Label("Easy Reading", systemImage: "book.fill")
-                                .font(.title3.bold())
-                                .frame(maxWidth: 420)
-                                .padding(.vertical, 12)
+                            VStack(spacing: 2) {
+                                Label(loc("Leseschablone", "Reading template"), systemImage: "book.fill")
+                                    .font(.title2.bold())
+                                Text("Easy Reading")
+                                    .font(.caption.weight(.semibold))
+                                    .opacity(0.9)
+                            }
+                            .frame(maxWidth: 420)
+                            .padding(.vertical, 10)
                         }
-                        .buttonStyle(.bordered)
-                        .tint(darkBG ? .white : Theme.accent)
-
-                        modeToggle
+                        .buttonStyle(.borderedProminent)
+                        .accessibilityLabel(loc("Leseschablone, Easy Reading",
+                                                "Reading template, Easy Reading"))
                     }
                     .padding()
                 }
