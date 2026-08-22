@@ -51,6 +51,9 @@ xcodebuild -scheme Sichtwort -destination "generic/platform=iOS Simulator" build
 Wortlisten liegen als JSON in `Sources/Resources/WordLists/` (Schema: siehe `SCHEMA.md` dort)
 und werden mit `tools/gen_wordlists.py` generiert.
 
+Die Sprachclips entstehen mit `tools/gen_word_audio.py` (edge-tts) — Verfahren,
+Stimmen und Paketbau siehe [`docs/AUDIO.md`](docs/AUDIO.md).
+
 ## Lizenz
 
 [GPL-3.0](LICENSE). Schriften: [OpenDyslexic](https://opendyslexic.org) und
