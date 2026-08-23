@@ -13,6 +13,7 @@ Resumable: vorhandene Dateien werden uebersprungen (--force ueberschreibt).
 
 Aufrufe:
   tools/gen_word_audio.py de                # 1154 dt. Woerter -> Sources/Resources/Audio/
+  tools/gen_word_audio.py de_conrad --letters  # dieselben Woerter + Alphabet mit Conrad (maennlich)
   tools/gen_word_audio.py en_us en_gb       # engl. Listen, beide Akzente
   tools/gen_word_audio.py packs             # alle 19 Paketsprachen -> tools/packs/audio/<code>/
   tools/gen_word_audio.py es fr --jobs 4    # einzelne Paketsprachen
@@ -21,9 +22,10 @@ Aufrufe:
 Danach Pakete bauen:
   tools/packs/build_packs.py tools/packs/wordlists tools/packs/audio <out_dir>
 
-ACHTUNG deutsche Buchstaben-Clips (de_<md5(buchstabe)>.mp3) stammen NICHT von
+ACHTUNG Seraphina-Buchstaben-Clips (de_<md5(buchstabe)>.mp3) stammen NICHT von
 hier, sondern aus /STIMMEN/BUCHSTABIEREN/ bzw. Marios Sprachgenerator
-(Tragesatz-Verfahren). Dieses Skript fasst sie nicht an.
+(Tragesatz-Verfahren). Dieses Skript fasst sie nicht an. Conrad-Buchstaben
+(de_conrad_...) dagegen schon: die Stimme ist monolingual, Batch reicht.
 """
 import argparse, concurrent.futures, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading
 
@@ -52,9 +54,10 @@ PACK_ORDER = ["es","mx","fr","it","pt","br","nl","da","no","pl","tr","el","hu","
 
 # App-interne Ziele: Stimme, Dateipraefix, Ausgabeordner, Manifest
 APP_TARGETS = {
-    "de":    ("de-DE-SeraphinaMultilingualNeural", "de_",    APP_AUDIO, "tools/audio_manifest.json"),
-    "en_us": ("en-US-AvaMultilingualNeural",       "en_us_", APP_AUDIO, "tools/_manifest_en_us.json"),
-    "en_gb": ("en-GB-SoniaNeural",                 "en_gb_", APP_AUDIO, "tools/_manifest_en_gb.json"),
+    "de":        ("de-DE-SeraphinaMultilingualNeural", "de_",        APP_AUDIO, "tools/audio_manifest.json"),
+    "de_conrad": ("de-DE-ConradNeural",                "de_conrad_", APP_AUDIO, "tools/_manifest_de_conrad.json"),
+    "en_us":     ("en-US-AvaMultilingualNeural",       "en_us_",     APP_AUDIO, "tools/_manifest_en_us.json"),
+    "en_gb":     ("en-GB-SoniaNeural",                 "en_gb_",     APP_AUDIO, "tools/_manifest_en_gb.json"),
 }
 
 print_lock = threading.Lock()
@@ -119,13 +122,17 @@ def alphabet(words):
 def build_target(name, with_letters):
     if name in APP_TARGETS:
         voice, prefix, outdir, manifest = APP_TARGETS[name]
-        words = app_words("en" if name.startswith("en_") else name)
+        words = app_words("de" if name.startswith("de") else "en" if name.startswith("en_") else name)
         letters = []
         if with_letters:
             if name == "de":
                 log("  Hinweis: dt. Buchstaben-Clips kommen aus /STIMMEN/BUCHSTABIEREN/ - uebersprungen.")
             else:
+                # Conrad ist monolingual de-DE - Buchstaben gehen im Batch-Verfahren,
+                # kein Tragesatz noetig (der galt der multilingualen Seraphina).
                 letters = [l for l in alphabet(words) if l not in words]
+                if name == "de_conrad":  # volles Alphabet wie der Seraphina-Bestand (q fehlt in den Listen)
+                    letters = sorted(set(letters) | set("abcdefghijklmnopqrstuvwxyzäöüß"))
         return Target(name, voice, prefix, outdir, manifest, words, letters)
     if name in PACKS:
         voice, source = PACKS[name]

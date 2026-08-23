@@ -2,8 +2,9 @@ import AVFoundation
 import CryptoKit
 
 /// Sprachausgabe — komplett offline, die größte funktionale Lücke des Originals.
-/// Deutsche Wörter: gebündelte Seraphina-Clips (edge-tts, de-DE-SeraphinaMultilingualNeural),
-/// Dateiname de_<md5(wort)>.mp3 (md5 wegen Case-Kollisionen wie Weg/weg).
+/// Deutsche Wörter: gebündelte Clips (edge-tts) in zwei Stimmen —
+/// Seraphina (de_<md5>.mp3, weiblich, Standard) und Conrad (de_conrad_<md5>.mp3, männlich).
+/// md5 wegen Case-Kollisionen wie Weg/weg.
 /// Fallback (eigene Listen, Englisch): AVSpeechSynthesizer.
 final class Speech {
     static let shared = Speech()
@@ -24,20 +25,29 @@ final class Speech {
     ]
 
     /// accent gilt nur für Englisch: "us" (Ava) oder "gb" (Sonia).
+    /// german gilt nur für Deutsch: "seraphina" (Standard) oder "conrad".
     /// Gibt die Länge des abgespielten Clips zurück, oder nil beim System-TTS
     /// (dessen Dauer steht vorab nicht fest). Aufrufer, die den Takt danach
     /// richten wollen — etwa das Buchstabieren — brauchen diesen Wert.
     @discardableResult
-    func speak(_ text: String, language: String, accent: String = "us") -> TimeInterval? {
+    func speak(_ text: String, language: String, accent: String = "us",
+               german: String = "seraphina") -> TimeInterval? {
         stop()
-        // 1. Gebündelte Clips (de, en)
+        // 1. Gebündelte Clips (de, en). Fehlt ein Conrad-Clip, springt Seraphina ein.
         if language == "de" || language == "en" {
-            let prefix = language == "en" ? "en_\(accent == "gb" ? "gb" : "us")_" : "de_"
-            if let url = clipURL(for: text, prefix: prefix),
-               let p = try? AVAudioPlayer(contentsOf: url) {
-                player = p
-                p.play()
-                return p.duration
+            var prefixes: [String]
+            if language == "en" {
+                prefixes = ["en_\(accent == "gb" ? "gb" : "us")_"]
+            } else {
+                prefixes = german == "conrad" ? ["de_conrad_", "de_"] : ["de_"]
+            }
+            for prefix in prefixes {
+                if let url = clipURL(for: text, prefix: prefix),
+                   let p = try? AVAudioPlayer(contentsOf: url) {
+                    player = p
+                    p.play()
+                    return p.duration
+                }
             }
         }
         // 2. Clips aus heruntergeladenem Sprachpaket
@@ -62,8 +72,9 @@ final class Speech {
     /// Buchstaben mit derselben Stimme gesprochen werden. Immer kleingeschrieben:
     /// „Wein" wird w-e-i-n buchstabiert, unabhängig von der Schreibweise.
     @discardableResult
-    func speakLetter(_ letter: String, language: String, accent: String = "us") -> TimeInterval? {
-        speak(letter.lowercased(), language: language, accent: accent)
+    func speakLetter(_ letter: String, language: String, accent: String = "us",
+                     german: String = "seraphina") -> TimeInterval? {
+        speak(letter.lowercased(), language: language, accent: accent, german: german)
     }
 
     private func clipURL(for word: String, prefix: String) -> URL? {

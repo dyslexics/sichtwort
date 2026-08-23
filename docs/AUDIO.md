@@ -12,6 +12,7 @@ Abgespielt wird in `Sources/Engine/Speech.swift` per `AVAudioPlayer`
 
 ```bash
 tools/gen_word_audio.py de                 # 1154 dt. Wörter  -> Sources/Resources/Audio/de_<md5>.mp3
+tools/gen_word_audio.py de_conrad --letters # dieselben Wörter + 30 Buchstaben mit Conrad -> de_conrad_<md5>.mp3
 tools/gen_word_audio.py en_us en_gb        # 420 engl. Wörter je Akzent -> en_us_/en_gb_<md5>.mp3
 tools/gen_word_audio.py packs --letters    # 19 Paketsprachen -> tools/packs/audio/<code>/<code>_<md5>.mp3
 tools/gen_word_audio.py es fr --letters    # einzelne Paketsprachen
@@ -49,7 +50,8 @@ liegen in einem temporären Verzeichnis und werden aufgeräumt. Nach dem Lauf st
 
 | Ziel | Stimme |
 |------|--------|
-| `de` | de-DE-SeraphinaMultilingualNeural (Marios Favorit) |
+| `de` | de-DE-SeraphinaMultilingualNeural (Marios Favorit, Standard) |
+| `de_conrad` | de-DE-ConradNeural (männlich, wählbar unter Sprache & Ton) |
 | `en_us` / `en_gb` | en-US-AvaMultilingualNeural / en-GB-SoniaNeural |
 | Pakete | Elvira, Dalia, Denise, Elsa, Raquel, Francisca, Fenna, Christel, Pernille, Zofia, Emel, Athina, Noémi, Alina, Vesna, Anila, Polina, Zariyah, Adri |
 
@@ -57,7 +59,7 @@ liegen in einem temporären Verzeichnis und werden aufgeräumt. Nach dem Lauf st
 
 ## 2. Buchstaben-Clips
 
-**Deutsch kommt NICHT aus diesem Skript.** Die 30 deutschen Buchstabennamen sind im
+**Deutsch (Seraphina) kommt NICHT aus diesem Skript.** Die 30 deutschen Buchstabennamen sind im
 „deutlich"-Stil auf H15 entstanden (`/var/www/html/STIMMEN/BUCHSTABIEREN/`, ab Build 18
 aus dem Sprachgenerator `/STIMMEN/GENERATOR/`) und liegen als `de_<md5(kleinbuchstabe)>.mp3`
 im Audio-Ordner. `gen_word_audio.py de --letters` fasst sie bewusst nicht an.
@@ -66,8 +68,8 @@ Grund: Einzelne kurze Tokens kippen bei der multilingualen Stimme ins Englische
 („Bee" → /biː/). Dort hilft nur der **Tragesatz** („Wir lernen jetzt das deutsche
 Alphabet. Weh.") mit Schnitt am `SentenceBoundary`-Event plus RMS-Hüllkurve.
 
-Für die Paketsprachen sind die Stimmen monolingual, dort genügt `--letters`
-mit demselben Batch-Verfahren.
+Für die Paketsprachen und Conrad (`de_conrad --letters`) sind die Stimmen
+monolingual, dort genügt `--letters` mit demselben Batch-Verfahren.
 
 ## 3. Sprachpakete bauen
 

@@ -192,6 +192,10 @@ struct SettingsView: View {
         Section(loc("Sprache & Ton", "Language & sound")) {
             Toggle(loc("Vorsprechen (Sprachausgabe)", "Speak words aloud"), isOn: settingsBinding.tts)
             if store.current.settings.tts {
+                Picker(loc("Deutsche Stimme", "German voice"), selection: settingsBinding.germanVoice) {
+                    Text(loc("Seraphina (weiblich)", "Seraphina (female)")).tag("seraphina")
+                    Text(loc("Conrad (männlich)", "Conrad (male)")).tag("conrad")
+                }
                 Picker(loc("Englische Stimme", "English voice"), selection: settingsBinding.englishAccent) {
                     Text(loc("Amerikanisch (Ava)", "American (Ava)")).tag("us")
                     Text(loc("Britisch (Sonia)", "British (Sonia)")).tag("gb")

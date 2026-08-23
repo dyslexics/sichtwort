@@ -265,7 +265,7 @@ struct EasyReadingView: View {
             try? await Task.sleep(nanoseconds: 1_900_000_000)
             guard !Task.isCancelled else { return }
             await MainActor.run {
-                Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
+                Speech.shared.speak(e.word, language: language, accent: settings.englishAccent, german: settings.germanVoice)
             }
         }
     }
@@ -288,7 +288,7 @@ struct EasyReadingView: View {
                         }
                     }
                     return Speech.shared.speakLetter(String(chars[i]), language: language,
-                                                     accent: settings.englishAccent)
+                                                     accent: settings.englishAccent, german: settings.germanVoice)
                 }
                 // Nach dem Clip immer dieselbe Pause — nicht ein fester Takt.
                 // Sonst hängt die Pause an der Cliplänge und „Ypsilon" (0,74 s)
@@ -302,7 +302,7 @@ struct EasyReadingView: View {
             await MainActor.run {
                 spellIndex = nil
                 withAnimation(.easeInOut(duration: 0.5)) { cardX = endX }
-                Speech.shared.speak(e.word, language: language, accent: settings.englishAccent)
+                Speech.shared.speak(e.word, language: language, accent: settings.englishAccent, german: settings.germanVoice)
             }
         }
     }
