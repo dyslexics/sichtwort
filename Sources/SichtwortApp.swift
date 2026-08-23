@@ -47,14 +47,36 @@ struct RootView: View {
     }
 }
 
-/// Zweisprachigkeit ohne xcstrings: UI folgt der Systemsprache, Standard Deutsch.
+/// Sprache von Menü und App-Führung. „system" folgt der Gerätesprache,
+/// „de"/„en" erzwingen sie — nötig, weil auf einem englisch eingestellten
+/// Gerät trotzdem deutsch geübt wird (und umgekehrt).
+/// Liegt in UserDefaults, nicht im Kind-Profil: die Bediensprache gehört
+/// zum Gerät, nicht zum Kind.
+enum UILanguage {
+    private static let key = "uiLanguage"
+
+    static var setting: String {
+        get { UserDefaults.standard.string(forKey: key) ?? "system" }
+        set { UserDefaults.standard.set(newValue, forKey: key) }
+    }
+
+    static var isEnglish: Bool {
+        switch setting {
+        case "de": return false
+        case "en": return true
+        default: return (Locale.preferredLanguages.first ?? "de").hasPrefix("en")
+        }
+    }
+}
+
+/// Zweisprachigkeit ohne xcstrings: UI folgt der Einstellung „Sprache der App",
+/// standardmäßig der Gerätesprache. Standard Deutsch.
 func loc(_ de: String, _ en: String) -> String {
     let args = ProcessInfo.processInfo.arguments
     if let i = args.firstIndex(of: "-lang"), i + 1 < args.count {
         return args[i + 1] == "en" ? en : de
     }
-    let pref = Locale.preferredLanguages.first ?? "de"
-    return pref.hasPrefix("en") ? en : de
+    return UILanguage.isEnglish ? en : de
 }
 
 enum Theme {

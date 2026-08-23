@@ -18,7 +18,7 @@ struct ProfileSettings: Codable, Hashable {
     var typeFilter: [String] = []      // leer = alle Wortarten
     var syllableFilter: String = "all" // all | 1 | 2 | 3plus
     var englishAccent: String = "us"   // us | gb — Stimme für englische Listen
-    var germanVoice: String = "seraphina" // seraphina | conrad — Stimme für deutsche Listen
+    var germanVoice: String = "conrad" // conrad | seraphina — Stimme für deutsche Listen
 
     init() {}
 
@@ -38,7 +38,7 @@ struct ProfileSettings: Codable, Hashable {
         typeFilter = try c.decodeIfPresent([String].self, forKey: .typeFilter) ?? []
         syllableFilter = try c.decodeIfPresent(String.self, forKey: .syllableFilter) ?? "all"
         englishAccent = try c.decodeIfPresent(String.self, forKey: .englishAccent) ?? "us"
-        germanVoice = try c.decodeIfPresent(String.self, forKey: .germanVoice) ?? "seraphina"
+        germanVoice = try c.decodeIfPresent(String.self, forKey: .germanVoice) ?? "conrad"
     }
 }
 

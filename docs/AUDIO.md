@@ -50,8 +50,8 @@ liegen in einem temporären Verzeichnis und werden aufgeräumt. Nach dem Lauf st
 
 | Ziel | Stimme |
 |------|--------|
-| `de` | de-DE-SeraphinaMultilingualNeural (Marios Favorit, Standard) |
-| `de_conrad` | de-DE-ConradNeural (männlich, wählbar unter Sprache & Ton) |
+| `de` | de-DE-SeraphinaMultilingualNeural (weiblich, wählbar unter Sprache & Ton) |
+| `de_conrad` | de-DE-ConradNeural (männlich, **Standard** seit Build 20) |
 | `en_us` / `en_gb` | en-US-AvaMultilingualNeural / en-GB-SoniaNeural |
 | Pakete | Elvira, Dalia, Denise, Elsa, Raquel, Francisca, Fenna, Christel, Pernille, Zofia, Emel, Athina, Noémi, Alina, Vesna, Anila, Polina, Zariyah, Adri |
 

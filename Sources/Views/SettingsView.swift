@@ -189,12 +189,17 @@ struct SettingsView: View {
     // MARK: - Extras
 
     private var extrasSection: some View {
-        Section(loc("Sprache & Ton", "Language & sound")) {
+        Section {
+            Picker(loc("Sprache der App", "App language"), selection: $store.uiLanguage) {
+                Text(loc("Deutsch", "German")).tag("de")
+                Text(loc("Englisch", "English")).tag("en")
+                Text(loc("Wie das Gerät", "Same as device")).tag("system")
+            }
             Toggle(loc("Vorsprechen (Sprachausgabe)", "Speak words aloud"), isOn: settingsBinding.tts)
             if store.current.settings.tts {
                 Picker(loc("Deutsche Stimme", "German voice"), selection: settingsBinding.germanVoice) {
-                    Text(loc("Seraphina (weiblich)", "Seraphina (female)")).tag("seraphina")
                     Text(loc("Conrad (männlich)", "Conrad (male)")).tag("conrad")
+                    Text(loc("Seraphina (weiblich)", "Seraphina (female)")).tag("seraphina")
                 }
                 Picker(loc("Englische Stimme", "English voice"), selection: settingsBinding.englishAccent) {
                     Text(loc("Amerikanisch (Ava)", "American (Ava)")).tag("us")
@@ -203,6 +208,11 @@ struct SettingsView: View {
             }
             Toggle(loc("Schweizer Schreibweise (ss statt ß)", "Swiss spelling (ss instead of ß)"),
                    isOn: settingsBinding.swissSpelling)
+        } header: {
+            Text(loc("Sprache & Ton", "Language & sound"))
+        } footer: {
+            Text(loc("„Sprache der App\" ändert Menü und Anleitung. Welche Sprache geübt wird, bestimmt die gewählte Wortliste.",
+                     "\"App language\" changes menus and guidance. The practice language comes from the selected word list."))
         }
     }
 

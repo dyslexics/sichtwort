@@ -25,13 +25,13 @@ final class Speech {
     ]
 
     /// accent gilt nur für Englisch: "us" (Ava) oder "gb" (Sonia).
-    /// german gilt nur für Deutsch: "seraphina" (Standard) oder "conrad".
+    /// german gilt nur für Deutsch: "conrad" (Standard) oder "seraphina".
     /// Gibt die Länge des abgespielten Clips zurück, oder nil beim System-TTS
     /// (dessen Dauer steht vorab nicht fest). Aufrufer, die den Takt danach
     /// richten wollen — etwa das Buchstabieren — brauchen diesen Wert.
     @discardableResult
     func speak(_ text: String, language: String, accent: String = "us",
-               german: String = "seraphina") -> TimeInterval? {
+               german: String = "conrad") -> TimeInterval? {
         stop()
         // 1. Gebündelte Clips (de, en). Fehlt ein Conrad-Clip, springt Seraphina ein.
         if language == "de" || language == "en" {
@@ -73,7 +73,7 @@ final class Speech {
     /// „Wein" wird w-e-i-n buchstabiert, unabhängig von der Schreibweise.
     @discardableResult
     func speakLetter(_ letter: String, language: String, accent: String = "us",
-                     german: String = "seraphina") -> TimeInterval? {
+                     german: String = "conrad") -> TimeInterval? {
         speak(letter.lowercased(), language: language, accent: accent, german: german)
     }
 

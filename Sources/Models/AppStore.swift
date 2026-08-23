@@ -8,6 +8,13 @@ final class AppStore: ObservableObject {
     @Published var customLists: [CustomList] = []
     @Published var currentProfileID: UUID?
 
+    /// Sprache von Menü und App-Führung (system|de|en). Gehört zum Gerät, nicht
+    /// zum Kind-Profil, und liegt darum in UserDefaults statt im state.json.
+    /// @Published, damit alle Views beim Umschalten sofort neu zeichnen.
+    @Published var uiLanguage: String = UILanguage.setting {
+        didSet { UILanguage.setting = uiLanguage }
+    }
+
     let builtinLists: [BuiltinList]
 
     private struct PersistedState: Codable {
@@ -108,12 +115,20 @@ final class AppStore: ObservableObject {
             for i in profiles.indices where profiles[i].settings.background == "wiese" {
                 profiles[i].settings.background = "meer"
             }
-            save()
         }
+        // Migration v2->v3: Conrad ist neue Standardstimme. Profile aus Build 19
+        // haben "seraphina" bereits gespeichert — der neue Default allein würde
+        // sie nie erreichen, darum einmalig umstellen.
+        if state.version < 3 {
+            for i in profiles.indices where profiles[i].settings.germanVoice == "seraphina" {
+                profiles[i].settings.germanVoice = "conrad"
+            }
+        }
+        if state.version < 3 { save() }
     }
 
     func save() {
-        let state = PersistedState(version: 2, profiles: profiles, customLists: customLists, currentProfileID: currentProfileID)
+        let state = PersistedState(version: 3, profiles: profiles, customLists: customLists, currentProfileID: currentProfileID)
         if let data = try? JSONEncoder().encode(state) {
             try? data.write(to: Self.fileURL, options: .atomic)
         }
